@@ -8,7 +8,6 @@ typedef struct data
 	int		rows;
 	int		columns;
 
-	int		*line;
 	char	**map;
 }	t_data;
 

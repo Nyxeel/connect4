@@ -30,9 +30,13 @@ MODE ?= mandatory
 # =========================
 SRCS_MAND = \
 	main.c \
+	parse.c \
+	init_game.c \
+	start_game.c \
+	signals.c \
 	utils.c \
 	cleanup.c \
-	verbose.c
+	verbose.c \
 
 
 # =========================

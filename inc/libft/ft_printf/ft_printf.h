@@ -6,14 +6,14 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:58:41 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/13 20:53:27 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/13 23:45:20 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include "../src/libft.h"
+# include "../src/libft.h"
 # include <stdarg.h>
 
 int	ft_printf(const char *str, ...);

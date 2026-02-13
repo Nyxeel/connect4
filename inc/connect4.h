@@ -8,6 +8,10 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <sys/time.h>
+# include <sys/ioctl.h>
+# include "time.h"
+# include "signal.h"
+# include "readline/readline.h"
 
 
 # include "libft/src/libft.h"
@@ -15,6 +19,8 @@
 # include "structs.h"
 # include "game.h"
 # include "ai.h"
+
+extern volatile sig_atomic_t g_signal;
 
 
 #endif /* CONNECT4_H */
