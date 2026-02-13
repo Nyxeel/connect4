@@ -1,0 +1,6 @@
+.vscode
+.obj/
+obj/
+connect4.pdf
+connect4
+*.o
