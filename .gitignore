@@ -1,4 +1,5 @@
 .vscode
+docs/
 .obj/
 obj/
 connect4.pdf

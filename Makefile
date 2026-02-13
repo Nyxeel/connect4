@@ -29,7 +29,10 @@ MODE ?= mandatory
 # Sources (MANDATORY base)
 # =========================
 SRCS_MAND = \
-	main.c
+	main.c \
+	utils.c \
+	cleanup.c \
+	verbose.c
 
 
 # =========================
@@ -40,7 +43,8 @@ SRCS_BONUS_ONLY = \
 	main_bonus.c \
 
 SRCS_MAND_REPLACED = \
-	main.c
+	main.c \
+
 
 # =========================
 # Mode selection
@@ -63,6 +67,9 @@ DEPS = $(OBJS:.o=.d)
 # Rules
 # =========================
 all: $(LIBFT) $(NAME)
+
+run: re
+	./$(NAME) 8 7
 
 verbose: CFLAGS += $(DEBUG_FLAGS)
 verbose: re
