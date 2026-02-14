@@ -87,7 +87,7 @@ static int	checks(t_data *data, int score)
 	return (score);
 }
 
-// Helper to find the first empty row in a column
+// find the first empty row in a column
 static int	get_available_row(t_data *data, int col)
 {
 	for (int r = data->rows - 1; r >= 0; r--)
@@ -98,7 +98,6 @@ static int	get_available_row(t_data *data, int col)
 	return (-1);
 }
 
-// Simple heuristic: scans board and scores positions
 static int	score_position(t_data *data)
 {
 	int		score;
@@ -119,33 +118,125 @@ static int	score_position(t_data *data)
 	return (score);
 }
 
-static int	minimax(t_data *data, int depth, int alpha, int beta,
-		int is_maximizing)
+static void	get_column_order(int *order, int columns)
 {
-	int	max_eval;
+	int	center;
+	int	i;
+
+	center = columns / 2;
+	i = 0;
+	order[i++] = center;
+	for (int delta = 1; delta <= center; delta++)
+	{
+		if (center - delta >= 0)
+			order[i++] = center - delta;
+		if (center + delta < columns)
+			order[i++] = center + delta;
+	}
+}
+
+static int	is_winning_move(t_data *data, int r, int c, char symbol)
+{
+	int	directions[4][2] = {{0, 1}, {1, 0}, {1, 1}, {1, -1}};
+	int	count;
+	int	dr;
+	int	dc;
+	int	nr;
+	int	nc;
+
+	// Order: Horizontal, Vertical, Diagonal, Anti-Diagonal
+	for (int i = 0; i < 4; i++)
+	{
+		count = 1;
+		// Check both directions (positive and negative)
+		for (int dir = -1; dir <= 1; dir += 2)
+		{
+			dr = directions[i][0] * dir;
+			dc = directions[i][1] * dir;
+			nr = r + dr;
+			nc = c + dc;
+			while (nr >= 0 && nr < data->rows && nc >= 0 && nc < data->columns
+				&& data->map[nr][nc] == symbol)
+			{
+				count++;
+				nr += dr;
+				nc += dc;
+			}
+		}
+		if (count >= 4)
+			return (1);
+	}
+	return (0);
+}
+
+static int	minimax(t_data *data, int depth, int alpha, int beta,
+		int is_maximizing, int last_r, int last_c)
+{
 	int	r;
 	int	eval;
+	int	col_order[data->columns];
+	int	max_eval;
+	int	c;
+	int	min_eval;
 
+	// Check if the previous move won the game
+	if (last_r != -1)
+	{
+		if (is_maximizing == 0 && is_winning_move(data, last_r, last_c, '1'))
+			return (1000000 + depth); // AI won
+		if (is_maximizing == 1 && is_winning_move(data, last_r, last_c, '2'))
+			return (-1000000 - depth); // Player won
+	}
 	if (depth == 0)
 		return (score_position(data));
-	max_eval = INT_MIN;
-	for (int c = 0; c < data->columns; c++)
+	// 1. Base Case: Leaf node or Terminal state
+	if (depth == 0)
+		return (score_position(data));
+	get_column_order(col_order, data->columns);
+	if (is_maximizing)
 	{
-		r = get_available_row(data, c);
-		if (r != -1)
+		max_eval = INT_MIN;
+		for (int i = 0; i < data->columns; i++)
 		{
-			data->map[r][c] = '1';
-			eval = minimax(data, depth - 1, alpha, beta, 0);
-			data->map[r][c] = '.'; // Undo move
-			if (eval > max_eval)
-				max_eval = eval;
-			if (eval > alpha)
-				alpha = eval;
-			if (beta <= alpha)
-				break ;
+			c = col_order[i];
+			r = get_available_row(data, c);
+			if (r != -1)
+			{
+				data->map[r][c] = '1'; // AI Move
+				eval = minimax(data, depth - 1, alpha, beta, 0, r, c);
+				data->map[r][c] = '.';
+				if (eval > max_eval)
+					max_eval = eval;
+				if (eval > alpha)
+					alpha = eval;
+				if (beta <= alpha)
+					break ; // Pruning
+			}
 		}
+		return (max_eval);
 	}
-	return (max_eval);
+	else // Minimizing Player (User)
+	{
+		min_eval = INT_MAX;
+		for (int i = 0; i < data->columns; i++)
+		{
+			c = col_order[i];
+			r = get_available_row(data, c);
+			if (r != -1)
+			{
+				data->map[r][c] = '2'; // Player Move
+				eval = minimax(data, depth - 1, alpha, beta, 1, r, c);
+				data->map[r][c] = '.';
+				if (eval < min_eval)
+					min_eval = eval;
+				if (eval < beta)
+					beta = eval;
+				if (beta <= alpha)
+					break ; // Pruning
+			}
+		}
+		return (min_eval);
+	}
 }
 
 void	ai_make_move(t_data *data)
@@ -166,7 +257,7 @@ void	ai_make_move(t_data *data)
 		{
 			data->map[r][c] = '1';
 			// TODO: Dynamic Depth based on Grid size
-			score = minimax(data, 4, INT_MIN, INT_MAX, 0);
+			score = minimax(data, 4, INT_MIN, INT_MAX, 0, r, c);
 			data->map[r][c] = '.';
 			if (score > best_score)
 			{
