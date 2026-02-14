@@ -152,3 +152,70 @@ int render_grid(t_data *data, Cell *cell)
     refresh();
 	return (0);
 }
+
+bool	render_loop(t_data *game)
+{
+	while (1)
+	{
+		getmaxyx(stdscr, game->terminal_max_y, game->terminal_max_x);
+        if (game->terminal_max_x < 43 || game->terminal_max_y < 17) {
+            clear();
+            printw("Window too small! Minimum size 17 x 43\n");
+            getch();
+            continue;
+        }
+
+
+		if (render_grid(game, &game->cell))
+			return false;
+
+
+		// Get user input
+        int ch = getch();
+
+		if (ch == KEY_RESIZE && game->flag.player == PLAYER_MOVE) {
+            getmaxyx(stdscr, game->terminal_max_y, game->terminal_max_x);
+            continue;
+        }
+		if (ch == ESC && game->flag.player == PLAYER_MOVE)
+		{
+		   endwin();
+		   return false; // ESC gedrückt
+		}
+		if (ch == 32 && game->flag.player == PLAYER_MOVE)
+		{
+			//check if input is possible    // SPACE gedrückt
+			return true;
+		}
+
+		if (ch == KEY_LEFT && game->flag.player == PLAYER_MOVE)
+        {
+
+			if (game->drop_position - 1 < 0)
+			{
+				game->drop_position = game->columns - 1;
+				message_box(game, &game->cell, "Move to left not possible\n");
+				refresh();
+			}
+			else
+				game->drop_position -= 1;
+            continue;
+        }
+		if (ch == KEY_RIGHT && game->flag.player == PLAYER_MOVE)
+        {
+
+			if (game->drop_position + 1 == game->columns)
+			{
+				game->drop_position = game->columns % game->columns;
+				message_box(game, &game->cell, "Move to right not possible\n");
+				refresh();
+			}
+			else
+				game->drop_position += 1;
+            continue;
+        }
+
+
+	}
+	return true;
+}

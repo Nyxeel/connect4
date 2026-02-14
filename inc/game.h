@@ -17,6 +17,8 @@ short get_color(char c);
 
 void message_box(t_data *data, Cell *cell, char *str);
 
+bool render_loop(t_data *game);
+
 void free_split(char **split);
 
 #endif /* GAME_H */
