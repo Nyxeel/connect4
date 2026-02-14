@@ -16,8 +16,9 @@
 #define AI_COLOR '1'
 #define NO_COLOR 90
 
-#define AI_MOVE true
-#define PLAYER_MOVE false
+#define AI_MOVE 0
+#define PLAYER_MOVE 1
+#define COLOR_BLACK 2
 
 #define CALC_POSITION 1
 

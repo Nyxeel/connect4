@@ -18,6 +18,10 @@ short get_color(char c);
 void message_box(t_data *data, Cell *cell, char *str);
 
 bool render_loop(t_data *game);
+int check_game_state(t_data *data);
+
+bool check_player_input(t_data *data, int column);
+int render_game(t_data *data, Cell *cell);
 
 void free_split(char **split);
 

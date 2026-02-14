@@ -6,19 +6,20 @@
 
 void	color_input(t_data *data, Cell *cell)
 {
+	short color;
+
+	if (data->flag.player == AI_MOVE)
+		color = RED;
+	else if (data->flag.player == PLAYER_MOVE)
+		color = YELLOW;
+	else
+	 	color = BLACK;
 
 	int x = data->drop_position;
-
 	int y = 1;
 
 	int start_x = 1 + x * (cell->w + 1);
 	int start_y = 1 + y * (cell->h + 1);
-
-	short color;
-	if (data->flag.player == AI_MOVE)
-		color = RED;
-	else
-		color = YELLOW;
 
 	for (int row = 0; row < cell->h; row++)
 	{

@@ -78,34 +78,8 @@ static void compute_cell_size(t_data *data, Cell *cell)
 }
 
 
-
-int render_grid(t_data *data, Cell *cell)
+int	render_game(t_data *data, Cell *cell)
 {
-    // attron(COLOR_PAIR( ENTER ));
-    getmaxyx(stdscr, data->terminal_max_y, data->terminal_max_x);
-	compute_cell_size(data, cell);
-    clear();
-
-	int need_w = data->columns * (cell->w + 1) + 1;
-	int need_h = (data->rows + 2) * (cell->h + 1) + 1;
-	if (need_w > data->terminal_max_x || need_h > data->terminal_max_y)
-	{
-		printw("Terminal too small! Minimum size: [%d, %d]\n", need_w, need_h);
-		refresh();
-		return (0);
-	}
-
-	//RENDER INPUT LINE
-
-	if (!data->flag.start)
-	{
-		data->flag.start = true;    //// set back to false after chossing was successfull
-		data->drop_position = data->rows/ 2;
-	}
-	message_box(data, &data->cell, NULL);
-
-	color_input(data, &data->cell);
-
 	/// RENDER GAME MAP
     int y = 2 *(cell->h + 1);
     for (int row = 2; row < data->rows + 2; row++)
@@ -147,6 +121,39 @@ int render_grid(t_data *data, Cell *cell)
 	if (color_grid(data, &data->cell))
 		return (1);		// fills cells with different colors
     refresh();
+	return 0;
+}
+
+
+int render_grid(t_data *data, Cell *cell)
+{
+    // attron(COLOR_PAIR( ENTER ));
+    getmaxyx(stdscr, data->terminal_max_y, data->terminal_max_x);
+	compute_cell_size(data, cell);
+    clear();
+
+	int need_w = data->columns * (cell->w + 1) + 1;
+	int need_h = (data->rows + 2) * (cell->h + 1) + 1;
+	if (need_w > data->terminal_max_x || need_h > data->terminal_max_y)
+	{
+		printw("Terminal too small! Minimum size: [%d, %d]\n", need_w, need_h);
+		refresh();
+		return (0);
+	}
+
+	//RENDER INPUT LINE
+
+	if (!data->flag.start)
+	{
+		data->flag.start = true;    //// set back to false after chossing was successfull
+		data->drop_position = data->columns / 2;
+	}
+	message_box(data, &data->cell, NULL);
+
+	color_input(data, &data->cell);
+
+	render_game(data, &data->cell);
+
 	return (0);
 }
 
@@ -158,12 +165,23 @@ bool	render_loop(t_data *game)
         if (game->terminal_max_x < 43 || game->terminal_max_y < 17) {
             clear();
             printw("Window too small! Minimum size 17 x 43\n");
-            getch();
+            int c = getch();
+			if (c == ESC)
+			{
+			   endwin();
+			   return false; // ESC gedrückt
+			}
             continue;
         }
 
-		if (render_grid(game, &game->cell))
-			return false;
+		// TODO: TEST if for loop works
+		for (int i = 0; i < 10; i++)
+		{
+			if (render_grid(game, &game->cell))
+				return false;
+		}
+		if (game->flag.player == AI_MOVE)
+			break ;
 
 		// Get user input
         int ch = getch();
@@ -180,7 +198,13 @@ bool	render_loop(t_data *game)
 		}
 		if (ch == 32 && game->flag.player == PLAYER_MOVE)
 		{
-			//check if input is possible    // SPACE gedrückt
+			if (!check_player_input(game, game->drop_position))
+			{
+				message_box(game, &game->cell, "You cannot drop the pawn at this column\n");
+				continue ;
+			}
+
+
 			return true;
 		}
 
@@ -210,6 +234,7 @@ bool	render_loop(t_data *game)
 				game->drop_position += 1;
             continue;
         }
+
 
 
 	}

@@ -43,6 +43,7 @@ SRCS_MAND = \
 	grid/render_grid.c \
 	grid/input_line.c \
 	grid/message.c \
+	check_game_state.c
 
 
 
