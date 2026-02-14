@@ -6,6 +6,9 @@ CC              = cc
 CFLAGS          = -Wall -Werror -Wextra -MMD -MP
 DEBUG_FLAGS     = -g -DVERBOSE=1
 
+
+LDLIBS      = -lncurses
+
 # =========================
 # Libs / Includes
 # =========================
@@ -37,6 +40,7 @@ SRCS_MAND = \
 	utils.c \
 	cleanup.c \
 	verbose.c \
+	grid/render_grid.c
 
 
 # =========================
@@ -79,7 +83,7 @@ verbose: CFLAGS += $(DEBUG_FLAGS)
 verbose: re
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDLIBS) -o $(NAME)
 
 $(OBJDIR)/%.o: $(SRC_DIR)/%.c inc/connect4.h
 	@mkdir -p $(dir $@)

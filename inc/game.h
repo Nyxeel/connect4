@@ -10,6 +10,10 @@ bool	init_game(t_data *data);
 bool	start_game(t_data *data);
 
 void	init_signals(void);
+void 	ft_think();
+
+
+int render_grid(t_data *data, Cell *cell);
 
 
 

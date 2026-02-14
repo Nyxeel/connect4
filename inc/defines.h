@@ -9,8 +9,16 @@
 #define ERROR 1
 #define SUCCESS 0
 
-#define AI_START 1
-#define PLAYER_START 0
+#define AI 1
+#define PLAYER 0
+
+
+#define PLAYER_COLOR '2'
+#define AI_COLOR '1'
+
+#define BLACK 0
+#define YELLOW 1
+#define RED 2
 
 
 #endif /* DEFINES_H */
