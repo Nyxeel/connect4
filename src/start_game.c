@@ -5,7 +5,7 @@
 
 
 
-static bool	game_loop(t_data *game, int start_flag)
+static bool	game_loop(t_data *game)
 {
 
 
@@ -22,7 +22,7 @@ static bool	game_loop(t_data *game, int start_flag)
 	init_pair(RED, COLOR_RED, COLOR_RED);
 	init_pair(BLACK, COLOR_BLACK, COLOR_BLACK);
 
-
+	ft_memset(&game->flag, 0, 0);
 	game->map[0][0] = '1'; //AI COLOR RED
 	game->map[1][0] = '2'; //PLAYER COLOR YELLOW
 
@@ -37,7 +37,7 @@ static bool	game_loop(t_data *game, int start_flag)
 		getmaxyx(stdscr, game->terminal_max_y, game->terminal_max_x);
         if (game->terminal_max_x < 43 || game->terminal_max_y < 17) {
             clear();
-            printw("Window too small! Minimum\n");
+            printw("Window too small! Minimum size 17 x 43\n");
             getch();
             continue;
         }
@@ -45,12 +45,12 @@ static bool	game_loop(t_data *game, int start_flag)
 		if (render_grid(game, &game->cell))
 			return false;
 
-		if (start_flag == AI)
+		/* if (game->start_flag == AI)
 			//AI_CALC_FIRST_MOVE
-			start_flag = 0;
+			game->start_flag = 0;
 		else
 			//AI_CALC_FIRST_MOVE
-			start_flag = 1;
+			game->start_flag = 1; */
 		//update_game_map
 		//print_game_map
 		//check_map() FOR WINNING CONDITION
@@ -60,6 +60,26 @@ static bool	game_loop(t_data *game, int start_flag)
 
 		if (ch == KEY_RESIZE) {
             getmaxyx(stdscr, game->terminal_max_y, game->terminal_max_x);
+            continue;
+        }
+		if (ch == KEY_LEFT)
+        {
+
+			if (game->drop_position - 1 < 0)
+			{
+				clear();
+				printw("Move to left not possible\n");
+			}
+            continue;
+        }
+		if (ch == KEY_RIGHT)
+        {
+			clear();
+			if (game->drop_position + 1 > game->columns)
+			{
+				clear();
+				printw("Move to right not possible\n");
+			}
             continue;
         }
 
@@ -80,12 +100,14 @@ bool	start_game(t_data *data)
 	if (((start_flag = rand() % 2) == AI))
 	{
 		printf("AI START\n" );
-		game_loop(data, AI);
+		data->start_flag = AI;
+		game_loop(data);
 	}
 	else
 	{
 		printf("PLAYER START\n");
-		game_loop(data, PLAYER);
+		data->start_flag = PLAYER;
+		game_loop(data);
 	}
 	return true ;
 }

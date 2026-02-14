@@ -40,7 +40,9 @@ SRCS_MAND = \
 	utils.c \
 	cleanup.c \
 	verbose.c \
-	grid/render_grid.c
+	grid/render_grid.c \
+	grid/input_line.c \
+
 
 
 # =========================

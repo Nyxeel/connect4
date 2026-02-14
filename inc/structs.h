@@ -9,6 +9,11 @@ typedef struct cell
 	int		h;
 }	Cell;
 
+typedef struct flag
+{
+	bool 	start;
+}	Flag;
+
 
 typedef struct data
 {
@@ -19,7 +24,11 @@ typedef struct data
 	int		terminal_max_y;
 	char	**map;
 
+	char	start_flag;
+	int		drop_position;
+
 	Cell	cell;
+	Flag	flag;
 }	t_data;
 
 

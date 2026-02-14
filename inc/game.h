@@ -13,7 +13,10 @@ void	init_signals(void);
 void 	ft_think();
 
 
-int render_grid(t_data *data, Cell *cell);
+int		render_grid(t_data *data, Cell *cell);
+void	color_input(t_data *data, Cell *cell);
+short	get_color(char c);
+
 
 
 

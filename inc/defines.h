@@ -9,12 +9,18 @@
 #define ERROR 1
 #define SUCCESS 0
 
-#define AI 1
-#define PLAYER 0
+#define AI '1'
+#define PLAYER '2'
 
 
 #define PLAYER_COLOR '2'
 #define AI_COLOR '1'
+
+#define CALC_POSITION 1
+
+#define START false
+
+
 
 #define BLACK 0
 #define YELLOW 1

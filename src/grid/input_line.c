@@ -1,0 +1,30 @@
+
+
+#include "connect4.h"
+#include "ncurses.h"
+
+
+void	color_input(t_data *data, Cell *cell)
+{
+	if (!data->flag.start)
+	{
+		data->flag.start = true;
+		data->drop_position = data->rows / 2;
+
+	}
+	int x = data->drop_position;
+	int y = 1;
+
+	int start_x = 1 + x * (cell->w + 1);
+	int start_y = 1 + y * (cell->h + 1);
+
+	short color = get_color(data->start_flag);
+	for (int row = 0; row < cell->h; row++)
+	{
+		move(start_y + row, start_x);
+		if( start_y < data->terminal_max_y)
+			chgat(cell->w, A_NORMAL, color, NULL);
+	}
+	return ;
+}
+
