@@ -119,8 +119,7 @@ static int	score_position(t_data *data)
 	return (score);
 }
 
-static int	minimax(t_data *data, int depth, int alpha, int beta,
-		int is_maximizing)
+static int	minimax(t_data *data, int depth, int alpha, int beta)
 {
 	int	max_eval;
 	int	r;
@@ -135,7 +134,7 @@ static int	minimax(t_data *data, int depth, int alpha, int beta,
 		if (r != -1)
 		{
 			data->map[r][c] = '1';
-			eval = minimax(data, depth - 1, alpha, beta, 0);
+			eval = minimax(data, depth - 1, alpha, beta);
 			data->map[r][c] = '.'; // Undo move
 			if (eval > max_eval)
 				max_eval = eval;
@@ -166,7 +165,7 @@ void	ai_make_move(t_data *data)
 		{
 			data->map[r][c] = '1';
 			// TODO: Dynamic Depth based on Grid size
-			score = minimax(data, 4, INT_MIN, INT_MAX, 0);
+			score = minimax(data, 4, INT_MIN, INT_MAX);
 			data->map[r][c] = '.';
 			if (score > best_score)
 			{
