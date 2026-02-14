@@ -327,7 +327,6 @@ void	ai_make_move(t_data *data)
 		r = get_available_row(data, c);
 		if (r != -1)
 		{
-			data->map[r][c] = '1';
 			score = minimax(data, dyn_depth, INT_MIN, INT_MAX, 0, r, c);
 			data->map[r][c] = '.';
 			if (score > best_score)
