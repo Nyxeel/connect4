@@ -29,8 +29,6 @@ bool	parse(t_data *data, char **argv)
 	}
 	if (((data->rows = atoi(argv[1])) < 6) || ((data->columns = atoi(argv[2])) < 7))
 	{
-		printf("rows: %i, columns: %i\n", data->rows, data->columns);
-
 		if (data->rows >= 0 && data->columns >= 0)
 			print_error("Minimum grid size is 6 lines & 7 columns");
 		else

@@ -14,7 +14,8 @@ int	main(int ac, char **av)
 		return (ERROR);
 
 	if (!start_game(&data))
-		return (ERROR);
+		return (free_split(data.map), ERROR);
 
+	free_split(data.map);
 	return (SUCCESS);
 }
