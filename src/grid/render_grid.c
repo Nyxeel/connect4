@@ -100,9 +100,10 @@ int render_grid(t_data *data, Cell *cell)
 	if (!data->flag.start)
 	{
 		data->flag.start = true;    //// set back to false after chossing was successfull
-		data->drop_position = data->rows / 2;
+		data->drop_position = data->columns / 2;
 	}
-	update_message_box(data, &data->cell, NULL);
+	message_box(data, &data->cell, NULL);
+
 	color_input(data, &data->cell);
 
 	/// RENDER GAME MAP

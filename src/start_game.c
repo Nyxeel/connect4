@@ -64,13 +64,18 @@ static bool	game_loop(t_data *game)
             getmaxyx(stdscr, game->terminal_max_y, game->terminal_max_x);
             continue;
         }
+		if (ch == ESC)
+		{
+		   endwin();
+		   break; // ESC gedrückt
+		}
 		if (ch == KEY_LEFT)
         {
 
 			if (game->drop_position - 1 < 0)
 			{
-				clear();
-				printw("Move to left not possible\n");
+				game->drop_position = game->columns - 1;
+				message_box(game, &game->cell, "Move to left not possible\n");
 			}
 			else
 				game->drop_position -= 1;
@@ -78,11 +83,11 @@ static bool	game_loop(t_data *game)
         }
 		if (ch == KEY_RIGHT)
         {
-			clear();
-			if (game->drop_position + 1 >= game->columns)
+
+			if (game->drop_position + 1 == game->columns)
 			{
-				clear();
-				printw("Move to right not possible\n");
+				game->drop_position = game->columns % game->columns;
+				message_box(game, &game->cell, "Move to right not possible\n");
 			}
 			else
 				game->drop_position += 1;
