@@ -60,6 +60,11 @@ static bool	game_loop(t_data *game)
 
 
 		// TODO:	check engame condition
+		{
+			
+
+
+		}
 
 
 		//ft_think();
