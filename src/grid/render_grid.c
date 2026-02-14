@@ -100,7 +100,7 @@ int render_grid(t_data *data, Cell *cell)
 	if (!data->flag.start)
 	{
 		data->flag.start = true;    //// set back to false after chossing was successfull
-		data->drop_position = data->columns / 2;
+		data->drop_position = data->rows/ 2;
 	}
 	message_box(data, &data->cell, NULL);
 
@@ -120,8 +120,6 @@ int render_grid(t_data *data, Cell *cell)
         mvaddch(y, x, '+');
         y++;
 
-
-
         for (int h = 0; h < cell->h; h++)
         {
             x = 0;
@@ -136,7 +134,6 @@ int render_grid(t_data *data, Cell *cell)
             y++;
         }
     }
-
 
     int x = 0;
     for (int col = 0; col < data->columns; col++)
@@ -165,19 +162,18 @@ bool	render_loop(t_data *game)
             continue;
         }
 
-
 		if (render_grid(game, &game->cell))
 			return false;
-
 
 		// Get user input
         int ch = getch();
 
-		if (ch == KEY_RESIZE && game->flag.player == PLAYER_MOVE) {
+		if (ch == KEY_RESIZE && game->flag.player == PLAYER_MOVE)
+		{
             getmaxyx(stdscr, game->terminal_max_y, game->terminal_max_x);
             continue;
         }
-		if (ch == ESC && game->flag.player == PLAYER_MOVE)
+		if (ch == ESC)
 		{
 		   endwin();
 		   return false; // ESC gedrückt

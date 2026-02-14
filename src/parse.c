@@ -35,5 +35,7 @@ bool	parse(t_data *data, char **argv)
 			print_error("Negative numbers are not allowed");
 		return (false);
 	}
+	if (data->rows >= 90 || data->columns >= 200)
+		return (print_error("Your computer cannot handle such a big grid size!\nPlease contact Bocal for better hardware\n"), false);
 	return (true);
 }
