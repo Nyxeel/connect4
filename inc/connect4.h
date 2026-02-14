@@ -11,7 +11,7 @@
 # include <sys/ioctl.h>
 # include "time.h"
 # include "signal.h"
-# include "readline/readline.h"
+
 
 
 # include "libft/src/libft.h"

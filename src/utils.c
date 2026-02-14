@@ -3,6 +3,6 @@
 
 void print_error(char *str)
 {
-	printf("%s\n%s\n", ERROR_MSG, str);
+	ft_printf("%s\n%s\n", ERROR_MSG, str);
 }
 

@@ -35,78 +35,23 @@ static bool	game_loop(t_data *game)
 
 	while (1)
 	{
-
-		getmaxyx(stdscr, game->terminal_max_y, game->terminal_max_x);
-        if (game->terminal_max_x < 43 || game->terminal_max_y < 17) {
-            clear();
-            printw("Window too small! Minimum size 17 x 43\n");
-            getch();
-            continue;
-        }
-
-		if (render_grid(game, &game->cell))
-			return false;
-
-		/* if (game->start_flag == AI)
-			//AI_CALC_FIRST_MOVE
-			game->start_flag = 0;
-		else
-			//AI_CALC_FIRST_MOVE
-			game->start_flag = 1; */
-		//update_game_map
-		//print_game_map
-		//check_map() FOR WINNING CONDITION
-
-		// Get user input
-        int ch = getch();
-
-		if (ch == KEY_RESIZE) {
-            getmaxyx(stdscr, game->terminal_max_y, game->terminal_max_x);
-            continue;
-        }
-		if (ch == ESC)
-		{
-		   endwin();
-		   break; // ESC gedrückt
-		}
-		if (ch == KEY_LEFT)
-        {
-
-			if (game->drop_position - 1 < 0)
-			{
-				game->drop_position = game->columns - 1;
-				message_box(game, &game->cell, "Move to left not possible\n");
-			}
-			else
-				game->drop_position -= 1;
-            continue;
-        }
-		if (ch == KEY_RIGHT)
-        {
-
-			if (game->drop_position + 1 == game->columns)
-			{
-				game->drop_position = game->columns % game->columns;
-				message_box(game, &game->cell, "Move to right not possible\n");
-			}
-			else
-				game->drop_position += 1;
-            continue;
-        }
-
-
 		if (game->flag.player == AI_MOVE)
 		{
 			//ft_ai(game);
-			//render_game(data, &game->cell);
-			game->flag.player = PLAYER_MOVE;
 
+			if (!render_loop(game))
+				return false;
+			sleep(3);
+			game->flag.player = PLAYER_MOVE;
+			game->flag.start = false;
 		}
 		else
 		{
 			//player_input(data);
-			//render_game(data, &game->cell);
+			if (!render_loop(game))
+				return false;
 			game->flag.player = AI_MOVE;
+			game->flag.start = false;
 
 			//take_user_input()
 
@@ -114,7 +59,7 @@ static bool	game_loop(t_data *game)
 		}
 
 
-		//sleep(2);
+		// TODO:	check engame condition
 
 
 		//ft_think();
@@ -129,13 +74,13 @@ bool	start_game(t_data *data)
 
 	if (((start_flag = rand() % 2) == AI))
 	{
-		printf("AI START\n" );
+		ft_printf("AI START\n" );
 		data->flag.player = AI_MOVE;
 		game_loop(data);
 	}
 	else
 	{
-		printf("PLAYER START\n");
+		ft_printf("PLAYER START\n");
 		data->flag.player = PLAYER_MOVE;
 		game_loop(data);
 	}

@@ -29,5 +29,6 @@
 #define TEXT_YELLOW 3
 #define TEXT_RED 3
 
+#define ESC 27
 
 #endif /* DEFINES_H */
