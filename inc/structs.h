@@ -12,6 +12,7 @@ typedef struct cell
 typedef struct flag
 {
 	bool 	start;
+	bool	player;
 }	Flag;
 
 

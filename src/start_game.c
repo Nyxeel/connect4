@@ -1,14 +1,11 @@
 
-#include "connect4.h"
-#include <ncurses.h>
+#include "../inc/connect4.h"
+
+#include "ncurses.h"
 
 
-
-
-static bool	game_loop(t_data *game)
+void	init_ncurses()
 {
-
-
 
 	initscr();              // Like mlx_init for ncurses basically
     cbreak();               // Disable line buffering (So you don't need to press enter to get a key input)
@@ -21,16 +18,21 @@ static bool	game_loop(t_data *game)
 	init_pair(YELLOW, COLOR_YELLOW, COLOR_YELLOW);
 	init_pair(RED, COLOR_RED, COLOR_RED);
 	init_pair(BLACK, COLOR_BLACK, COLOR_BLACK);
+	init_pair(TEXT_YELLOW, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(TEXT_RED, COLOR_YELLOW, COLOR_BLACK);
 
+	return ;
+}
+
+
+
+
+static bool	game_loop(t_data *game)
+{
+
+	init_ncurses();
 	ft_memset(&game->flag, 0, 0);
-	game->map[0][0] = '1'; //AI COLOR RED
-	game->map[1][0] = '2'; //PLAYER COLOR YELLOW
 
-
-/* 	if (start_flag == PLAYER_START)
-		print_map(game); */
-
-	//print_grid(data);
 	while (1)
 	{
 
@@ -88,6 +90,25 @@ static bool	game_loop(t_data *game)
         }
 
 
+		if (game->flag.player == AI_MOVE)
+		{
+			//ft_ai(game);
+			//render_game(data, &game->cell);
+			game->flag.player = PLAYER_MOVE;
+
+		}
+		else
+		{
+			//player_input(data);
+			//render_game(data, &game->cell);
+			game->flag.player = AI_MOVE;
+
+			//take_user_input()
+
+
+		}
+
+
 		//sleep(2);
 
 
@@ -104,13 +125,13 @@ bool	start_game(t_data *data)
 	if (((start_flag = rand() % 2) == AI))
 	{
 		printf("AI START\n" );
-		data->start_flag = AI;
+		data->flag.player = AI_MOVE;
 		game_loop(data);
 	}
 	else
 	{
 		printf("PLAYER START\n");
-		data->start_flag = PLAYER;
+		data->flag.player = PLAYER_MOVE;
 		game_loop(data);
 	}
 	return true ;

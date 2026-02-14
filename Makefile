@@ -42,6 +42,7 @@ SRCS_MAND = \
 	verbose.c \
 	grid/render_grid.c \
 	grid/input_line.c \
+	grid/message.c \
 
 
 

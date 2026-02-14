@@ -1,5 +1,5 @@
 
-#include "connect4.h"
+#include "../inc/connect4.h"
 
 volatile sig_atomic_t g_signal = 0;
 

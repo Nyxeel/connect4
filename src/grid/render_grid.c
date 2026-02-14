@@ -1,6 +1,7 @@
 
 
-#include "connect4.h"
+#include "../../inc/connect4.h"
+
 #include <ncurses.h>
 
 
@@ -96,6 +97,12 @@ int render_grid(t_data *data, Cell *cell)
 
 	//RENDER INPUT LINE
 
+	if (!data->flag.start)
+	{
+		data->flag.start = true;    //// set back to false after chossing was successfull
+		data->drop_position = data->rows / 2;
+	}
+	update_message_box(data, &data->cell, NULL);
 	color_input(data, &data->cell);
 
 	/// RENDER GAME MAP
