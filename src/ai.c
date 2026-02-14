@@ -248,6 +248,58 @@ static int	minimax(t_data *data, int depth, int alpha, int beta,
 	}
 }
 
+static int	get_dynamic_depth(t_data *data)
+{
+	int		total_cells;
+	int		playable_cols;
+	int		pieces_placed;
+	int		depth;
+	float	fill_ratio;
+
+	total_cells = data->rows * data->columns;
+	playable_cols = 0;
+	pieces_placed = 0;
+	// Find playable columns and approximate pieces placed
+	for (int c = 0; c < data->columns; c++)
+	{
+		if (data->map[0][c] == '.')
+			playable_cols++;
+		// Find how many pieces are in each column to get total count
+		for (int r = 0; r < data->rows; r++)
+		{
+			if (data->map[r][c] != '.')
+			{
+				pieces_placed += (data->rows - r);
+				break ;
+			}
+		}
+	}
+	// Base Depth based on grid size and vibes
+	if (total_cells <= 42)
+		depth = 7;
+	else if (total_cells <= 72)
+		depth = 6;
+	else
+		depth = 4;
+	// Dynamic Scaling
+	if (playable_cols <= data->columns / 2)
+		depth += 2;
+	else if (playable_cols <= data->columns / 1.5)
+		depth += 1;
+	// fill-ratio = less pieces -> more depth ! less paths
+	fill_ratio = (float)pieces_placed / (float)total_cells;
+	if (fill_ratio > 0.75f)
+		depth += 3;
+	else if (fill_ratio > 0.50f)
+		depth += 1;
+	// Hard Caps cause ynails
+	if (depth > 12)
+		depth = 12;
+	if (depth < 4)
+		depth = 4;
+	return (depth);
+}
+
 void	ai_make_move(t_data *data)
 {
 	int	best_score;
@@ -255,6 +307,7 @@ void	ai_make_move(t_data *data)
 	int	target_row;
 	int	r;
 	int	score;
+	int	dyn_depth;
 
 	best_score = INT_MIN;
 	best_col = 0;
@@ -265,8 +318,8 @@ void	ai_make_move(t_data *data)
 		if (r != -1)
 		{
 			data->map[r][c] = '1';
-			// TODO: Dynamic Depth based on Grid size
-			score = minimax(data, 4, INT_MIN, INT_MAX, 0, r, c);
+			dyn_depth = get_dynamic_depth(data);
+			score = minimax(data, dyn_depth, INT_MIN, INT_MAX, 0, r, c);
 			data->map[r][c] = '.';
 			if (score > best_score)
 			{
