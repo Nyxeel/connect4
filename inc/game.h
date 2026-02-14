@@ -22,6 +22,7 @@ int check_game_state(t_data *data);
 
 bool check_player_input(t_data *data, int column);
 int render_game(t_data *data, Cell *cell);
+void ai_make_move(t_data *data);
 
 void free_split(char **split);
 

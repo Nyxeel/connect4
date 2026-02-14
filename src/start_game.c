@@ -34,12 +34,14 @@ static bool	game_loop(t_data *game)
 
 		if (game->flag.player == AI_MOVE)
 		{
-			// ft_ai(game);
+			ai_make_move(game);
+
 			if (!render_loop(game))
 				return (false);
 			sleep(3);
 			game->flag.player = PLAYER_MOVE;
 			game->flag.start = false;
+			refresh();
 		}
 		else
 		{

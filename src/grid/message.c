@@ -31,6 +31,9 @@ void	message_box(t_data *data, Cell *cell, char *message)
 
 	(void) cell;
 
+	if (!message)
+		return ;
+
 
 	int textstart   = 1;
 	int y_center = (data->terminal_max_x  / 2) - ft_strlen(message);
@@ -40,10 +43,10 @@ void	message_box(t_data *data, Cell *cell, char *message)
 		color = TEXT_RED;
 	else
 		color = TEXT_YELLOW;
-
+/*
 	if (!message)
 		message = ft_strdup("Your turn. Move with arrows left/right and drop pawn with 'SPACE'");
-
+ */
 	delete_message(textstart, y_center, message);
 
 	attron(COLOR_PAIR(color));

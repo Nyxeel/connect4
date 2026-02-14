@@ -1,7 +1,7 @@
 #include "../inc/connect4.h"
 #include <limits.h>
 
-// Counts sequences of 4 to score the board state
+/* // Counts sequences of 4 to score the board state
 static int	evaluate_window(int count_ai, int count_player, int count_empty)
 {
 	int	score;
@@ -16,7 +16,7 @@ static int	evaluate_window(int count_ai, int count_player, int count_empty)
 	if (count_player == 3 && count_empty == 1)
 		score -= 80; // Block player
 	return (score);
-}
+} */
 
 static int	checks(t_data *data, int score)
 {
@@ -217,7 +217,7 @@ static int	minimax(t_data *data, int depth, int alpha, int beta,
 			if (r != -1)
 			{
 				data->map[r][c] = '1'; // AI Move
-				eval = minimax(data, depth - 1, alpha, beta, 0, r, c);
+				eval = minimax(data, depth - 1, alpha, beta, 1, r, c);
 				data->map[r][c] = '.';
 				if (eval > max_eval)
 					max_eval = eval;
@@ -239,7 +239,7 @@ static int	minimax(t_data *data, int depth, int alpha, int beta,
 			if (r != -1)
 			{
 				data->map[r][c] = '2'; // Player Move
-				eval = minimax(data, depth - 1, alpha, beta, 1, r, c);
+				eval = minimax(data, depth - 1, alpha, beta, 0, r, c);
 				data->map[r][c] = '.';
 				if (eval < min_eval)
 					min_eval = eval;
@@ -318,16 +318,18 @@ void	ai_make_move(t_data *data)
 	int		dyn_depth;
 
 	map = data->map;
-	best_score = 0;
+	best_score = INT_MIN;
 	best_col = 0;
 	target_row = 0;
 	dyn_depth = get_dynamic_depth(data);
 	for (int c = 0; c < data->columns; c++)
 	{
+		// perror("ACCESS\n");
+
 		r = get_available_row(data, c);
 		if (r != -1)
 		{
-			score = minimax(data, dyn_depth, INT_MIN, INT_MAX, 0, r, c);
+			score = minimax(data, dyn_depth, INT_MIN, INT_MAX, 1, r, c);
 			data->map[r][c] = '.';
 			if (score > best_score)
 			{
@@ -335,7 +337,11 @@ void	ai_make_move(t_data *data)
 				best_col = c;
 				target_row = r;
 			}
+			data->map[r][c] = '0';
 		}
 	}
+	// perror("NO ACCESS\n");
+
+
 	data->map[target_row][best_col] = '1';
 }
