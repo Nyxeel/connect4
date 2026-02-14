@@ -4,14 +4,36 @@
 #include "ncurses.h"
 
 
-void	update_message_box(t_data *data, Cell *cell, char *message)
+void	delete_message(int x, int y, char *message)
 {
 
+	if (!message)
+		return ;
 
-	int y = 10;
+	attron(COLOR_PAIR(BLACK));
+	int text_len = ft_strlen(message);
+	int textstart   = x - (text_len / 2);
+	move(y, textstart);
 
-	int x_center = (data->columns / 2) + (cell->w / 2);
-	int y_center = y + (cell->h / 2);
+	int i = 0;
+	while (i < text_len )
+	{
+		printw(" ");
+		i++;
+	}
+	attroff(COLOR_PAIR(BLACK));
+
+	return ;
+}
+
+void	message_box(t_data *data, Cell *cell, char *message)
+{
+
+	(void) cell;
+
+
+	int textstart   = 1;
+	int y_center = (data->terminal_max_x  / 2) - ft_strlen(message);
 
 	short color;
 	if (data->flag.player == AI_MOVE)
@@ -19,10 +41,13 @@ void	update_message_box(t_data *data, Cell *cell, char *message)
 	else
 		color = TEXT_YELLOW;
 
-	message = ft_strdup("Your turn. Move with arrows left/right and drop pawn with 'SPACE'");
+	if (!message)
+		message = ft_strdup("Your turn. Move with arrows left/right and drop pawn with 'SPACE'");
+
+	delete_message(textstart, y_center, message);
 
 	attron(COLOR_PAIR(color));
-	int textstart   = x_center - (ft_strlen(message) / 2);
+
 			move(y_center, textstart);
                 printw("%s", message);
 

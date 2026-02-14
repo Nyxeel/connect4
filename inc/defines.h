@@ -14,6 +14,7 @@
 
 #define PLAYER_COLOR '2'
 #define AI_COLOR '1'
+#define NO_COLOR 90
 
 #define AI_MOVE true
 #define PLAYER_MOVE false
@@ -27,5 +28,6 @@
 #define RED 2
 #define TEXT_YELLOW 3
 #define TEXT_RED 3
+
 
 #endif /* DEFINES_H */
