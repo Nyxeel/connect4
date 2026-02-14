@@ -247,7 +247,7 @@ void	ai_make_move(t_data *data)
 	int	r;
 	int	score;
 
-	best_score = INT_MIN;
+	best_score = 0;
 	best_col = 0;
 	target_row = 0;
 	for (int c = 0; c < data->columns; c++)

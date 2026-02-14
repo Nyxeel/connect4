@@ -28,16 +28,24 @@ static bool	game_loop(t_data *game)
 
 	init_ncurses();
 	ft_memset(&game->flag, 0, 0);
+/* 	game->map[0][0] = '1';
+	game->map[game->rows - 5][0] = '1';
+
+	game->map[game->rows - 4][0] = '1';
+	game->map[game->rows - 3][0] = '1';
+	game->map[game->rows - 2][0] = '1';
+	game->map[game->rows - 1][0] = '1'; */
+
 	while (1)
 	{
 		refresh();
 
 		if (game->flag.player == AI_MOVE)
 		{
-			// ft_ai(game);
+			ai_make_move(game);
 			if (!render_loop(game))
 				return (false);
-			sleep(3);
+			sleep(2);
 			game->flag.player = PLAYER_MOVE;
 			game->flag.start = false;
 		}
