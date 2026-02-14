@@ -70,16 +70,20 @@ static bool	game_loop(t_data *game)
 				clear();
 				printw("Move to left not possible\n");
 			}
+			else
+				game->drop_position -= 1;
             continue;
         }
 		if (ch == KEY_RIGHT)
         {
 			clear();
-			if (game->drop_position + 1 > game->columns)
+			if (game->drop_position + 1 >= game->columns)
 			{
 				clear();
 				printw("Move to right not possible\n");
 			}
+			else
+				game->drop_position += 1;
             continue;
         }
 
