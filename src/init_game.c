@@ -1,5 +1,5 @@
 
-#include "connect4.h"
+#include "../inc/connect4.h"
 
 bool	init_game(t_data *data)
 {
