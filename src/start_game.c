@@ -7,12 +7,15 @@ static bool	game_loop(t_data *game, int start_flag)
 {
 	(void) game;
 
+	sleep(2);
 
 	if (VERBOSE)
 		printf("INSIDE GAMELOOP\n");
 
 	if (start_flag == PLAYER_START)
 		print_map(game);
+
+	//print_grid(data);
 	while (1)
 	{
 
@@ -24,10 +27,10 @@ static bool	game_loop(t_data *game, int start_flag)
 			start_flag = 1;
 		//update_game_map
 		//print_game_map
-		// check_map() FOR WINNING CONDITION
+		//check_map() FOR WINNING CONDITION
 
 
-		sleep(5);
+		sleep(2);
 		break;
 	}
 	return (true);
