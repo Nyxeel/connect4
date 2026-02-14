@@ -21,6 +21,7 @@ static int	evaluate_window(int count_ai, int count_player, int count_empty)
 static int	checks(t_data *data, int score)
 {
 	char	**map;
+	char	v;
 	int		max_r;
 	int		max_c;
 	int		dr;
@@ -31,7 +32,6 @@ static int	checks(t_data *data, int score)
 	int		c_start_max;
 	int		count_ai;
 	int		count_player;
-	char	v;
 	int		count_empty;
 
 	map = data->map;
@@ -99,9 +99,12 @@ static int	checks(t_data *data, int score)
 // find the first empty row in a column
 static int	get_available_row(t_data *data, int col)
 {
+	char	**map;
+
+	map = data->map;
 	for (int r = data->rows - 1; r >= 0; r--)
 	{
-		if (data->map[r][col] == '.') // Assuming '.' is empty
+		if (map[r][col] == '.') // Assuming '.' is empty
 			return (r);
 	}
 	return (-1);
@@ -109,9 +112,9 @@ static int	get_available_row(t_data *data, int col)
 
 static int	score_position(t_data *data)
 {
+	char	**map;
 	int		score;
 	int		center_col;
-	char	**map;
 	int		r;
 
 	score = 0;
@@ -146,13 +149,15 @@ static void	get_column_order(int *order, int columns)
 
 static int	is_winning_move(t_data *data, int r, int c, char symbol)
 {
-	int	directions[4][2] = {{0, 1}, {1, 0}, {1, 1}, {1, -1}};
-	int	count;
-	int	dr;
-	int	dc;
-	int	nr;
-	int	nc;
+	char	**map;
+	int		directions[4][2] = {{0, 1}, {1, 0}, {1, 1}, {1, -1}};
+	int		count;
+	int		dr;
+	int		dc;
+	int		nr;
+	int		nc;
 
+	map = data->map;
 	// Order: Horizontal, Vertical, Diagonal, Anti-Diagonal
 	for (int i = 0; i < 4; i++)
 	{
@@ -181,13 +186,15 @@ static int	is_winning_move(t_data *data, int r, int c, char symbol)
 static int	minimax(t_data *data, int depth, int alpha, int beta,
 		int is_maximizing, int last_r, int last_c)
 {
-	int	r;
-	int	eval;
-	int	col_order[data->columns];
-	int	max_eval;
-	int	c;
-	int	min_eval;
+	char	**map;
+	int		r;
+	int		eval;
+	int		col_order[data->columns];
+	int		max_eval;
+	int		c;
+	int		min_eval;
 
+	map = data->map;
 	// Check if the previous move won the game
 	if (last_r != -1)
 	{
@@ -196,8 +203,6 @@ static int	minimax(t_data *data, int depth, int alpha, int beta,
 		if (is_maximizing == 1 && is_winning_move(data, last_r, last_c, '2'))
 			return (-1000000 - depth); // Player won
 	}
-	if (depth == 0)
-		return (score_position(data));
 	// 1. Base Case: Leaf node or Terminal state
 	if (depth == 0)
 		return (score_position(data));
@@ -250,12 +255,14 @@ static int	minimax(t_data *data, int depth, int alpha, int beta,
 
 static int	get_dynamic_depth(t_data *data)
 {
+	char	**map;
+	float	fill_ratio;
 	int		total_cells;
 	int		playable_cols;
 	int		pieces_placed;
 	int		depth;
-	float	fill_ratio;
 
+	map = data->map;
 	total_cells = data->rows * data->columns;
 	playable_cols = 0;
 	pieces_placed = 0;
@@ -302,23 +309,25 @@ static int	get_dynamic_depth(t_data *data)
 
 void	ai_make_move(t_data *data)
 {
-	int	best_score;
-	int	best_col;
-	int	target_row;
-	int	r;
-	int	score;
-	int	dyn_depth;
+	char	**map;
+	int		best_score;
+	int		best_col;
+	int		target_row;
+	int		r;
+	int		score;
+	int		dyn_depth;
 
-	best_score = INT_MIN;
+	map = data->map;
+	best_score = 0;
 	best_col = 0;
 	target_row = 0;
+	dyn_depth = get_dynamic_depth(data);
 	for (int c = 0; c < data->columns; c++)
 	{
 		r = get_available_row(data, c);
 		if (r != -1)
 		{
 			data->map[r][c] = '1';
-			dyn_depth = get_dynamic_depth(data);
 			score = minimax(data, dyn_depth, INT_MIN, INT_MAX, 0, r, c);
 			data->map[r][c] = '.';
 			if (score > best_score)
