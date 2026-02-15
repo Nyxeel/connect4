@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 13:56:02 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 14:34:31 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 16:02:32 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ bool	bonus_game_loop(t_data *game)
 
 			ft_sleep(2);
 			int target_col = ai_make_move(game);
+			if (target_col == -1)
+				return (false);
 			render_move(game, target_col);
 			game->flag.player = PLAYER_MOVE;
 			game->flag.start = false;

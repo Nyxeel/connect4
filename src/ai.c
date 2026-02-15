@@ -351,7 +351,7 @@ static int	get_dynamic_depth(t_data *data)
 	return (depth);
 }
 
-void	ai_make_move(t_data *data)
+int	ai_make_move(t_data *data)
 {
 	int best_score = INT_MIN;
 	int best_col = -1;
@@ -369,7 +369,7 @@ void	ai_make_move(t_data *data)
 	// array logic for the active window
 	int *order = malloc(sizeof(int) * width);
 	if (!order)
-		return ; // Handle error
+		return (-1); // Handle error
 
 	for (int i = 0; i < width; i++)
 	{
@@ -416,4 +416,5 @@ void	ai_make_move(t_data *data)
 
 	if (best_col != -1)
 		data->map[target_row][best_col] = '1';
+	return (best_col);
 }
