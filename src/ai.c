@@ -1,5 +1,6 @@
 #include "../inc/connect4.h"
 #include <limits.h>
+#include <ncurses.h> //TODO: remove before submission
 
 // Actual game + 2 columns to left and right
 typedef struct s_bounds
@@ -337,7 +338,7 @@ static int	get_dynamic_depth(t_data *data)
 		depth += 2;
 	else if (playable_cols <= data->columns / 1.5)
 		depth += 1;
-	// fill-ratio = less pieces -> more depth ! less paths
+	// fill-ratio = more pieces -> more depth ! less paths
 	fill_ratio = (float)pieces_placed / (float)total_cells;
 	if (fill_ratio > 0.75f)
 		depth += 3;
