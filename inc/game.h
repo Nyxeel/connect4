@@ -27,7 +27,7 @@ int render_game(t_data *data, Cell *cell);
 void ai_make_move(t_data *data);
 
 
-int 	ai_make_move(t_data *data);
+void ai_make_move(t_data *data);
 void compute_cell_size(t_data *data, Cell *cell);
 void	reset_message_box(t_data *data, Cell *cell);
 void	render_move(t_data *data, int target_row);

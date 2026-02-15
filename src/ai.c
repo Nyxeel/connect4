@@ -120,16 +120,16 @@ static int minimax(t_data *data, int depth, int alpha, int beta, int is_maximizi
     }
 }
 
-/* static int	get_dynamic_depth(t_data *data)
+static int	get_dynamic_depth(t_data *data)
 {
-
+	char	**map;
 	float	fill_ratio;
 	int		total_cells;
 	int		playable_cols;
 	int		pieces_placed;
 	int		depth;
 
-
+	map = data->map;
 	total_cells = data->rows * data->columns;
 	playable_cols = 0;
 	pieces_placed = 0;
@@ -172,7 +172,7 @@ static int minimax(t_data *data, int depth, int alpha, int beta, int is_maximizi
 	if (depth < 4)
 		depth = 4;
 	return (depth);
-} */
+}
 
 void ai_make_move(t_data *data)
 {
