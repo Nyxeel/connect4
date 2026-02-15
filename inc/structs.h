@@ -14,6 +14,7 @@ typedef struct flag
 	bool 	start;
 	int		player;
 	bool	color;
+	bool	bonus;
 }	Flag;
 
 

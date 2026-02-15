@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 03:46:17 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 05:20:08 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 05:44:11 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void	render_move(t_data *data, int best_col)
 			data->drop_position++;
 		color_input(data, &data->cell);
 		refresh();
-		usleep(500000); // 500ms delay for animation
+		ft_sleep(1);
 
 		moves--;
 	}
-	usleep(500000); // 500ms delay for animation
+	ft_sleep(1);
 	refresh();
 	return ;
 }

@@ -26,7 +26,7 @@ void	init_ncurses(t_data *game)
 }
 
 
-static bool	game_loop(t_data *game)
+static bool	bonus_game_loop(t_data *game)
 {
 	int	state;
 
@@ -36,12 +36,13 @@ static bool	game_loop(t_data *game)
 	while (1)
 	{
 
+
 		if (game->flag.player == AI_MOVE)
 		{
 			if (!render_loop(game))
 				return (false);
 
-			sleep(2);
+			ft_sleep(2);
 			int target_col = ai_make_move(game);
 			render_move(game, target_col);
 			game->flag.player = PLAYER_MOVE;
@@ -55,7 +56,6 @@ static bool	game_loop(t_data *game)
 			game->flag.player = AI_MOVE;
 			game->flag.start = false;
 			refresh();
-
 		}
 		state = check_game_state(game);
 		if (state == 0)
@@ -74,7 +74,7 @@ static bool	game_loop(t_data *game)
 
 	}
 	render_game(game, &game->cell);
-	sleep(5);
+	ft_sleep(5);
 	endwin();
 	return (true);
 }
@@ -85,16 +85,14 @@ bool	start_game(t_data *data)
 
 	start_flag = 0;
 	if (((start_flag = rand() % 2) == AI_MOVE))
-	{
-		ft_printf("AI START\n");
 		data->flag.player = AI_MOVE;
-		game_loop(data);
-	}
 	else
-	{
-		ft_printf("PLAYER START\n");
 		data->flag.player = PLAYER_MOVE;
-		game_loop(data);
-	}
+
+
+	if (data->flag.bonus)
+		bonus_game_loop(data);
+	else
+		return false; //game_loop(data);
 	return (true);
 }
