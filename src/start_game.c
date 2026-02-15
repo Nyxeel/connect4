@@ -39,12 +39,10 @@ static bool	bonus_game_loop(t_data *game)
 
 		if (game->flag.player == AI_MOVE)
 		{
+			ai_make_move(game);
 			if (!render_loop(game))
 				return (false);
-
-			ft_sleep(2);
-			int target_col = ai_make_move(game);
-			render_move(game, target_col);
+			// sleep(3);
 			game->flag.player = PLAYER_MOVE;
 			game->flag.start = false;
 			refresh();
@@ -73,8 +71,7 @@ static bool	bonus_game_loop(t_data *game)
 			break ;
 
 	}
-	render_game(game, &game->cell);
-	ft_sleep(5);
+	sleep(3);
 	endwin();
 	return (true);
 }
