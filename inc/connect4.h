@@ -24,6 +24,8 @@
 # include "time.h"
 # include "signal.h"
 # include "libft/src/libft.h"
+# include "libft/ft_printf/ft_printf.h"
+# include "libft/get_next_line/get_next_line.h"
 # include "defines.h"
 # include "structs.h"
 # include "game.h"
