@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 14:08:51 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 15:53:55 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 16:57:55 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ void	print_colors(t_data *data, int x, int y)
 }
 
 
-void	print_grid(t_data *data, char *str)
+void	print_grid(t_data *data)
 {
 
 	/// RENDER GAME MAP
 	int y = 0;
-	ft_printf(str);
-	ft_printf("\n\n");
 
+
+	ft_printf("\n\n");
 	print_numbers(data);
 
 	int line = 0;

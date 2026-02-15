@@ -1,7 +1,7 @@
 
 #include "../inc/connect4.h"
 
-static bool	digit_check(const char *str)
+bool	digit_check(const char *str)
 {
 	ft_skip_zeros(&str);
 	ft_skip_signs(&str);

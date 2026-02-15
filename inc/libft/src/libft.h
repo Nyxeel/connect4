@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 11:23:20 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/14 17:00:12 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 16:12:02 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #define LIBFT_H
 
 #include "../ft_printf/ft_printf.h"
+#include "../get_next_line/get_next_line.h"
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
