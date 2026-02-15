@@ -57,9 +57,9 @@ int	color_grid(t_data *data, Cell *cell)
 	return (0);
 }
 
-static void compute_cell_size(t_data *data, Cell *cell)
+void compute_cell_size(t_data *data, Cell *cell)
 {
-
+	getmaxyx(stdscr, data->terminal_max_y, data->terminal_max_x);
     int usable_w = data->terminal_max_x - (data->columns + 1);		//Calculate the usable width of the window for the grid.
     int usable_h = data->terminal_max_y - (data->rows + 2 + 1);		//2 extras rows for input and text output
 
@@ -87,11 +87,11 @@ int	render_game(t_data *data, Cell *cell)
         int x = 0;
         for (int col = 0; col < data->columns; col++)
         {
-            mvaddch(y, x++, '+');
+            mvaddch(y, x++, ACS_PLUS);
             for (int i = 0; i < cell->w; i++)
-                mvaddch(y, x++, '-');
+                mvaddch(y, x++, ACS_HLINE);
         }
-        mvaddch(y, x, '+');
+        mvaddch(y, x, ACS_PLUS);
         y++;
 
         for (int h = 0; h < cell->h; h++)
@@ -99,12 +99,11 @@ int	render_game(t_data *data, Cell *cell)
             x = 0;
             for (int col = 0; col < data->columns; col++)
             {
-                mvaddch(y, x++, '|');
-                for (int i = 0; i < cell->w; i++){
+                mvaddch(y, x++, ACS_VLINE);
+                for (int i = 0; i < cell->w; i++)
                     mvaddch(y, x++, ' ');
-				}
             }
-            mvaddch(y, x, '|');
+            mvaddch(y, x, ACS_VLINE);
             y++;
         }
     }
@@ -112,13 +111,13 @@ int	render_game(t_data *data, Cell *cell)
     int x = 0;
     for (int col = 0; col < data->columns; col++)
     {
-        mvaddch(y, x++, '+');
+        mvaddch(y, x++, ACS_PLUS);
         for (int i = 0; i < cell->w; i++)
-            mvaddch(y, x++, '-');
+            mvaddch(y, x++, ACS_HLINE);
     }
-    mvaddch(y, x, '+');
+    mvaddch(y, x, ACS_PLUS);
 
-	if (color_grid(data, &data->cell))
+  	if (color_grid(data, &data->cell))
 		return (1);		// fills cells with different colors
     refresh();
 	return 0;
@@ -127,15 +126,12 @@ int	render_game(t_data *data, Cell *cell)
 
 int render_grid(t_data *data, Cell *cell)
 {
-    // attron(COLOR_PAIR( ENTER ));
-    getmaxyx(stdscr, data->terminal_max_y, data->terminal_max_x);
-	compute_cell_size(data, cell);
-    clear();
-
-	int need_w = data->columns * (cell->w + 1) + 1;
+  	compute_cell_size(data, cell);
+   	int need_w = data->columns * (cell->w + 1) + 1;
 	int need_h = (data->rows + 2) * (cell->h + 1) + 1;
 	if (need_w > data->terminal_max_x || need_h > data->terminal_max_y)
 	{
+		clear();
 		printw("Terminal too small! Minimum size: [%d, %d]\n", need_w, need_h);
 		refresh();
 		return (0);
@@ -148,7 +144,14 @@ int render_grid(t_data *data, Cell *cell)
 		data->flag.start = true;    //// set back to false after chossing was successfull
 		data->drop_position = data->columns / 2;
 	}
-	message_box(data, &data->cell, NULL);
+
+	char message[20];
+	if (data->flag.player == AI_MOVE)
+		ft_strcpy(message, "AI's turn");
+	else
+		ft_strcpy(message, "Player's turn");
+
+	message_box(data, cell, message);
 
 	color_input(data, &data->cell);
 
@@ -164,7 +167,8 @@ bool	render_loop(t_data *game)
 	while (1)
 	{
 		getmaxyx(stdscr, game->terminal_max_y, game->terminal_max_x);
-        if (game->terminal_max_x < 43 || game->terminal_max_y < 17) {
+        if (game->terminal_max_x < 43 || game->terminal_max_y < 17)
+		{
             clear();
             printw("Window too small! Minimum size 17 x 43\n");
             int c = getch();
@@ -173,6 +177,7 @@ bool	render_loop(t_data *game)
 			   endwin();
 			   return false; // ESC gedrückt
 			}
+			refresh();
             continue;
         }
 
@@ -183,8 +188,6 @@ bool	render_loop(t_data *game)
 		if (game->flag.player == AI_MOVE)
 			break ;
 
-
-
 		// Get user input
         if (game->flag.player == PLAYER_MOVE)
 			ch = getch();
@@ -192,6 +195,7 @@ bool	render_loop(t_data *game)
 		if (ch == KEY_RESIZE && game->flag.player == PLAYER_MOVE)
 		{
             getmaxyx(stdscr, game->terminal_max_y, game->terminal_max_x);
+
             continue;
         }
 		if (ch == ESC)
@@ -202,24 +206,24 @@ bool	render_loop(t_data *game)
 		if (ch == ' ' && game->flag.player == PLAYER_MOVE)
 		{
 			clear();
-
+			refresh();
 			if (!check_player_input(game, game->drop_position))
 			{
 				message_box(game, &game->cell, "You cannot drop the pawn at this column\n");
+
 				continue ;
 			}
 			//flushinp();
-
 			break ;
 		}
 
 		if (ch == KEY_LEFT && game->flag.player == PLAYER_MOVE)
         {
-
+			clear();
 			if (game->drop_position - 1 < 0)
 			{
 				game->drop_position = game->columns - 1;
-				message_box(game, &game->cell, "Move to left not possible\n");
+				//message_box(game, &game->cell, "Move to left not possible\n");
 				refresh();
 			}
 			else
@@ -228,11 +232,11 @@ bool	render_loop(t_data *game)
         }
 		if (ch == KEY_RIGHT && game->flag.player == PLAYER_MOVE)
         {
-
+			clear();
 			if (game->drop_position + 1 == game->columns)
 			{
 				game->drop_position = game->columns % game->columns;
-				message_box(game, &game->cell, "Move to right not possible\n");
+				//message_box(game, &game->cell, "Move to right not possible\n");
 				refresh();
 			}
 			else

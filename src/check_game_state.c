@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:43:21 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/14 23:04:35 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 05:13:43 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ bool	check_player_input(t_data *data, int column)
 		else
 		{
 			data->map[lines][column] = '2';
-			data->flag.player = COLOR_BLACK;
 			color_input(data, &data->cell);
 			render_game(data, &data->cell);
 

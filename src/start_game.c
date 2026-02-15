@@ -1,9 +1,8 @@
 
 #include "../inc/connect4.h"
-
 #include "ncurses.h"
 
-void	init_ncurses(void)
+void	init_ncurses(t_data *game)
 {
 	initscr(); // Like mlx_init for ncurses basically
 	cbreak();
@@ -17,7 +16,12 @@ void	init_ncurses(void)
 	init_pair(RED, COLOR_RED, COLOR_RED);
 	init_pair(BLACK, COLOR_BLACK, COLOR_BLACK);
 	init_pair(TEXT_YELLOW, COLOR_YELLOW, COLOR_BLACK);
-	init_pair(TEXT_RED, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(TEXT_RED, COLOR_RED, COLOR_BLACK);
+	init_pair(TEXT_BLUE, COLOR_BLUE, COLOR_BLACK);
+
+
+	compute_cell_size(game, &game->cell);
+
 	return ;
 }
 
@@ -26,54 +30,51 @@ static bool	game_loop(t_data *game)
 {
 	int	state;
 
-	init_ncurses();
+	init_ncurses(game);
 	ft_memset(&game->flag, 0, 0);
-/* 	game->map[0][0] = '1';
-	game->map[game->rows - 5][0] = '1';
-
-	game->map[game->rows - 4][0] = '1';
-	game->map[game->rows - 3][0] = '1';
-	game->map[game->rows - 2][0] = '1';
-	game->map[game->rows - 1][0] = '1'; */
 
 	while (1)
 	{
 
-		timeout(30);
 		if (game->flag.player == AI_MOVE)
 		{
-			ai_make_move(game);
 			if (!render_loop(game))
 				return (false);
+
 			sleep(2);
+			int target_col = ai_make_move(game);
+			render_move(game, target_col);
 			game->flag.player = PLAYER_MOVE;
 			game->flag.start = false;
 			refresh();
 		}
 		else
 		{
-			// player_input(data);
 			if (!render_loop(game))
 				return (false);
 			game->flag.player = AI_MOVE;
 			game->flag.start = false;
 			refresh();
 
-			// take_user_input()
 		}
 		state = check_game_state(game);
 		if (state == 0)
 			continue ;
-		else if (state == 1)
-			message_box(game, &game->cell, "Player wins");
-		else if (state == 2)
+		else
+			clear();
+		game->flag.player = COLOR_BLUE;
+		if (state == 1)
 			message_box(game, &game->cell, "AI wins");
+		else if (state == 2)
+			message_box(game, &game->cell, "Player wins");
 		else if (state == 3)
 			message_box(game, &game->cell, "Draw");
 		if (state != 0)
 			break ;
-		// ft_think();
+
 	}
+	render_game(game, &game->cell);
+	sleep(5);
 	endwin();
 	return (true);
 }

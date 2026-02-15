@@ -239,7 +239,7 @@ static int	minimax(t_data *data, int depth, int alpha, int beta,
 	}
 }
 
-void	ai_make_move(t_data *data)
+int	ai_make_move(t_data *data)
 {
 	int	best_score;
 	int	best_col;
@@ -268,4 +268,5 @@ void	ai_make_move(t_data *data)
 		}
 	}
 	data->map[target_row][best_col] = '1';
+	return (best_col);
 }

@@ -4,22 +4,22 @@
 #include "ncurses.h"
 
 
-void	delete_message(int x, int y, char *message)
+void	reset_message_box(t_data *data, Cell *cell)
 {
-
-	if (!message)
-		return ;
-
 	attron(COLOR_PAIR(BLACK));
-	int text_len = ft_strlen(message);
-	int textstart   = x - (text_len / 2);
-	move(y, textstart);
 
-	int i = 0;
-	while (i < text_len )
+
+	int start_x;
+	int start_y = 1;
+
+	for (int i = 0; i < cell->h; i++)
 	{
-		printw(" ");
-		i++;
+		start_x = 1;
+		for (int row = 0; row < data->terminal_max_x; row++)
+		{
+			mvaddch(start_y, start_x++, ' ');
+		}
+		start_y++;
 	}
 	attroff(COLOR_PAIR(BLACK));
 
@@ -32,28 +32,30 @@ void	message_box(t_data *data, Cell *cell, char *message)
 	(void) cell;
 
 	if (!message)
-		message = ft_strdup("Your turn. Move with arrows left/right and drop pawn with 'SPACE'");
+		return ;
+	clear();
 
+	compute_cell_size(data, cell);
 
-	int textstart   = (data->terminal_max_x  / 2) - ft_strlen(message);
-	int y_center = cell->h / 2;
+	int textstart = (data->terminal_max_x  / 2) - (ft_strlen(message) / 2);
+	int y_center = 1 + (cell->h / 2);
 
 	short color;
 	if (data->flag.player == AI_MOVE)
 		color = TEXT_RED;
-	else
+	else if (data->flag.player == PLAYER_MOVE)
 		color = TEXT_YELLOW;
+	else
+		color = TEXT_BLUE;
 
+	//reset_message_box(data, cell);
 
-
-	delete_message(textstart, y_center, message);
-
+	/// PUT NEW STRING IN MESSAGE BOX
 	attron(COLOR_PAIR(color));
-
-			move(y_center, textstart);
-                printw("%s", message);
-
-	attroff(COLOR_PAIR(color));
+	move(y_center, textstart);
+    printw("%s", message);
+	attroff(COLOR_PAIR(color));\
+	refresh();
 	return ;
 }
 
