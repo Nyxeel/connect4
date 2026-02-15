@@ -1,7 +1,6 @@
 
 
 #include "../../inc/connect4.h"
-
 #include <ncurses.h>
 
 
