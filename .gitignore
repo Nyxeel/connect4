@@ -6,3 +6,4 @@ connect4.pdf
 connect4
 *.o
 *a
+.venv
