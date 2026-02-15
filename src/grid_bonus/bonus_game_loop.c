@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 13:56:02 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 19:53:38 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 20:49:26 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 
 static void	init_ncurses(t_data *game)
 {
-	initscr(); // Like mlx_init for ncurses basically
-	cbreak();
-	// Disable line buffering (So you don't need to press enter to get a key input)
-	noecho();             // Do not display typed characters
-	keypad(stdscr, TRUE); // Enable function keys (like arrow keys)
-	curs_set(0);
-	// Hide cursor on screen (usually it is blinking in the shell)
+	initscr(); 				// Like mlx_init for ncurses basically
+	cbreak();				// Disable line buffering (So you don't need to press enter to get a key input)
+	noecho();           	// Do not display typed characters
+	keypad(stdscr, TRUE); 	// Enable function keys (like arrow keys)
+	curs_set(0); 			// Hide cursor on screen (usually it is blinking in the shell)
 	start_color();
 	init_color(10, 400, 400, 1000);
 	init_pair(YELLOW, COLOR_YELLOW, COLOR_YELLOW);
@@ -35,6 +33,24 @@ static void	init_ncurses(t_data *game)
 	return ;
 }
 
+
+void	print_big_message(const char *msg)
+{
+	int	row, col;
+
+	getmaxyx(stdscr, row, col);
+	clear();
+
+	mvprintw(row/2 - 2, (col - 28) / 2, " █████╗ ██╗    ██╗██╗███╗   ██╗");
+	mvprintw(row/2 - 1, (col - 28) / 2, "██╔══██╗██║    ██║██║████╗  ██║");
+	mvprintw(row/2,     (col - 28) / 2, "███████║██║ █╗ ██║██║██╔██╗ ██║");
+	mvprintw(row/2 + 1, (col - 28) / 2, "██╔══██║██║███╗██║██║██║╚██╗██║");
+	mvprintw(row/2 + 2, (col - 28) / 2, "██║  ██║╚███╔███╔╝██║██║ ╚████║");
+
+	mvprintw(row/2 + 4, (col - ft_strlen(msg)) / 2, "%s", msg);
+	refresh();
+}
+
 bool	bonus_game_loop(t_data *game)
 {
 	int	state;
@@ -46,12 +62,11 @@ bool	bonus_game_loop(t_data *game)
 		{
 			if (!render_loop(game))
 				return (false);
-
-			// ft_sleep(2);
 			int target_col = ai_make_move(game);
 			if (target_col == -1)
 				return (false);
 			render_move(game, target_col);
+			game->flag.no_render = false;
 			game->flag.player = PLAYER_MOVE;
 			game->flag.start = false;
 			refresh();
@@ -71,7 +86,7 @@ bool	bonus_game_loop(t_data *game)
 			clear();
 		game->flag.player = COLOR_BLUE;
 		if (state == 1)
-			message_box(game, &game->cell, "AI wins");
+			print_big_message("AI wins");
 		else if (state == 2)
 			message_box(game, &game->cell, "Player wins");
 		else if (state == 3)
@@ -80,7 +95,6 @@ bool	bonus_game_loop(t_data *game)
 			break ;
 
 	}
-	render_game(game, &game->cell);
 	ft_sleep(5);
 	endwin();
 	return (true);

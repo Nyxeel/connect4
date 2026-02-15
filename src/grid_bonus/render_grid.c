@@ -49,14 +49,14 @@ void highlight_landing_cell(t_data *data, Cell *cell)
 {
     if (data->flag.player != PLAYER_MOVE)
         return;
-        
+
     int landing_row = find_landing_row(data, data->drop_position);
     if (landing_row == -1)
         return; // Column is full, don't highlight
-        
+
     int start_x = 1 + data->drop_position * (cell->w + 1);
     int start_y = 1 + (landing_row + 2) * (cell->h + 1);
-    
+
     // Highlight the landing cell with a distinctive appearance
     for (int row = 0; row < cell->h; row++)
     {
@@ -163,18 +163,16 @@ int render_grid(t_data *data, Cell *cell)
 	{
 		clear();
 		printw("Terminal too small! Minimum size: [%d, %d]\n", need_w, need_h);
+		data->flag.no_render = true;
 		refresh();
 		return (0);
 	}
-
 	//RENDER INPUT LINE
-
 	if (!data->flag.start)
 	{
 		data->flag.start = true;    //// set back to false after chossing was successfull
 		data->drop_position = data->columns / 2;
 	}
-
 	char message[20];
 	if (data->flag.player == AI_MOVE)
 		ft_strcpy(message, "AI's turn");
@@ -211,21 +209,15 @@ bool	render_loop(t_data *game)
 			refresh();
             continue;
         }
-
 		if (render_grid(game, &game->cell))
 			return false;
-
 		if (game->flag.player == AI_MOVE)
 			break ;
-
-		// Get user input
         if (game->flag.player == PLAYER_MOVE)
 			ch = getch();
-
 		if (ch == KEY_RESIZE && game->flag.player == PLAYER_MOVE)
 		{
             getmaxyx(stdscr, game->terminal_max_y, game->terminal_max_x);
-
             continue;
         }
 		if (ch == ESC)
@@ -246,7 +238,6 @@ bool	render_loop(t_data *game)
 			//flushinp();
 			break ;
 		}
-
 		if (ch == KEY_LEFT && game->flag.player == PLAYER_MOVE)
         {
 			clear();
@@ -273,9 +264,6 @@ bool	render_loop(t_data *game)
 				game->drop_position += 1;
             continue;
         }
-
-
-
 	}
 	return true;
 }

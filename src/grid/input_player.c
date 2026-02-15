@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 16:09:03 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 20:09:09 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 21:15:25 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,14 @@ int	parse_input(t_data *data, char *str)
 	char *trim = ft_strtrim(str, "\n");
 	if (!digit_check(trim))
 	{
-		print_error("Only numbers are valid!");
+		print_error("Only numbers are valid!\n");
 		free(trim);
 		return (0);
 	}
 	if (int_overflow_check(trim))
 	{
-		print_error("Number would overflowed");
+		print_error("Overflow\n");
 		free(trim);
-
 		return (0);
 	}
 	int nb = ft_atoi(trim);
@@ -35,7 +34,7 @@ int	parse_input(t_data *data, char *str)
 	if (nb > data->columns || nb < 1)
 	{
 		if (nb < 0)
-			print_error("Negative numbers are not allowed");
+			print_error("Negative numbers are not allowed\n");
 		else
 		 	print_error("Number out of grid scope\n");
 		return (0);

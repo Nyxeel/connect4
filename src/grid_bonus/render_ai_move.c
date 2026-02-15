@@ -13,7 +13,7 @@ void	render_move(t_data *data, int best_col)
 	else
 		moves = y - x;
 
-	while (moves > 0)
+	while (moves > 0 && data->flag.no_render == false)
 	{
 		if (x > y)
 			data->drop_position--;

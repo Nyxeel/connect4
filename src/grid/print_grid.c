@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 14:08:51 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 16:57:55 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 21:05:18 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ void	print_grid(t_data *data)
             ft_printf("─");
 
     }
-    ft_printf("+\n\n");
+    ft_printf("+\n");
+	print_numbers(data);
+	ft_printf("\n");
+
+
 
 }
