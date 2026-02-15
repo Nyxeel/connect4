@@ -166,10 +166,10 @@ bool	render_loop(t_data *game)
 
 	while (1)
 	{
+        clear();
 		getmaxyx(stdscr, game->terminal_max_y, game->terminal_max_x);
         if (game->terminal_max_x < 43 || game->terminal_max_y < 17)
 		{
-            clear();
             printw("Window too small! Minimum size 17 x 43\n");
             int c = getch();
 			if (c == ESC)
@@ -181,7 +181,6 @@ bool	render_loop(t_data *game)
             continue;
         }
 
-		// TODO: TEST if for loop works
 		if (render_grid(game, &game->cell))
 			return false;
 

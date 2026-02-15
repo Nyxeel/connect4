@@ -29,6 +29,13 @@ void compute_cell_size(t_data *data, Cell *cell);
 void	reset_message_box(t_data *data, Cell *cell);
 void	render_move(t_data *data, int target_row);
 
+bool	game_loop(t_data *game);
+void	print_grid(t_data *data, char *str);
+
+
+bool	bonus_game_loop(t_data *game);
+
+
 void free_split(char **split);
 void	ft_sleep(int sek);
 
