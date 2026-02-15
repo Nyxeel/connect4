@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 16:09:03 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 17:16:00 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 17:36:10 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	parse_input(t_data *data, char *str)
 {
+
+	ft_printf("STRING; %s\n", str);
+
 	if (*str == '\n')
 		return (0);
 	if (digit_check(str))
