@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 05:49:41 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/01/24 16:46:46 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 16:55:42 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ bool	int_overflow_check(const char *str)
 	ft_skip_zeros(&p);
 	len = ft_strlen(p);
 	if (len < 10)
-		return (false);
+		return (ft_printf("1\n"), false);
 	if (len > 10)
-		return (true);
+		return (ft_printf("2\n"),true);
 	if (len == 10 && !negative && ft_strncmp(p, "2147483647", 10) <= 0)
-		return (false);
+		return (ft_printf("3\n"),true);
 	if (len == 10 && negative && ft_strncmp(p, "2147483648", 10) <= 0)
-		return (false);
+		return (ft_printf("4\n"), false);
 	return (true);
 }

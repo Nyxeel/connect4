@@ -43,6 +43,7 @@ SRCS_MAND = \
 	verbose.c \
 	check_game_state.c \
 	grid/game_loop.c \
+	grid/input_player.c \
 	grid/print_grid.c \
 	grid_bonus/render_grid.c \
 	grid_bonus/input_line.c \
@@ -56,8 +57,6 @@ SRCS_MAND = \
 # Bonus replacements/additions
 # =========================
 
-SRCS_BONUS_ONLY = \
-	main_bonus.c \
 
 SRCS_MAND_REPLACED = \
 	main.c \
@@ -101,9 +100,7 @@ $(OBJDIR)/%.o: $(SRC_DIR)/%.c inc/connect4.h
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR) all
 
-# 42 bonus rule
-bonus:
-	$(MAKE) MODE=bonus all
+
 
 clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
@@ -117,4 +114,4 @@ re: fclean all
 
 -include $(DEPS)
 
-.PHONY: all verbose bonus clean fclean re
+.PHONY: all verbose clean fclean re

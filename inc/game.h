@@ -23,7 +23,10 @@ bool render_loop(t_data *game);
 int check_game_state(t_data *data);
 
 bool check_player_input(t_data *data, int column);
+int	take_player_input(t_data *data);
 int render_game(t_data *data, Cell *cell);
+bool	digit_check(const char *str);
+
 
 int	ai_make_move(t_data *data);
 void compute_cell_size(t_data *data, Cell *cell);
@@ -31,7 +34,7 @@ void reset_message_box(t_data *data, Cell *cell);
 void render_move(t_data *data, int target_row);
 
 bool game_loop(t_data *game);
-void print_grid(t_data *data, char *str);
+void print_grid(t_data *data);
 
 bool bonus_game_loop(t_data *game);
 
