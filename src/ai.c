@@ -1,6 +1,5 @@
 #include "../inc/connect4.h"
 #include <limits.h>
-#include <ncurses.h> //TODO: remove before submission
 
 // Actual game + 2 columns to left and right
 typedef struct s_bounds
