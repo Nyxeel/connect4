@@ -159,6 +159,8 @@ int render_grid(t_data *data, Cell *cell)
 
 bool	render_loop(t_data *game)
 {
+	int ch;
+
 	while (1)
 	{
 		getmaxyx(stdscr, game->terminal_max_y, game->terminal_max_x);
@@ -175,16 +177,17 @@ bool	render_loop(t_data *game)
         }
 
 		// TODO: TEST if for loop works
-		for (int i = 0; i < 10; i++)
-		{
-			if (render_grid(game, &game->cell))
-				return false;
-		}
+		if (render_grid(game, &game->cell))
+			return false;
+
 		if (game->flag.player == AI_MOVE)
 			break ;
 
+
+
 		// Get user input
-        int ch = getch();
+        if (game->flag.player == PLAYER_MOVE)
+			ch = getch();
 
 		if (ch == KEY_RESIZE && game->flag.player == PLAYER_MOVE)
 		{
@@ -196,16 +199,18 @@ bool	render_loop(t_data *game)
 		   endwin();
 		   return false; // ESC gedrückt
 		}
-		if (ch == 32 && game->flag.player == PLAYER_MOVE)
+		if (ch == ' ' && game->flag.player == PLAYER_MOVE)
 		{
+			clear();
+
 			if (!check_player_input(game, game->drop_position))
 			{
 				message_box(game, &game->cell, "You cannot drop the pawn at this column\n");
 				continue ;
 			}
+			//flushinp();
 
-
-			return true;
+			break ;
 		}
 
 		if (ch == KEY_LEFT && game->flag.player == PLAYER_MOVE)

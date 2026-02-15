@@ -31,9 +31,12 @@ void	message_box(t_data *data, Cell *cell, char *message)
 
 	(void) cell;
 
+	if (!message)
+		message = ft_strdup("Your turn. Move with arrows left/right and drop pawn with 'SPACE'");
 
-	int textstart   = 1;
-	int y_center = (data->terminal_max_x  / 2) - ft_strlen(message);
+
+	int textstart   = (data->terminal_max_x  / 2) - ft_strlen(message);
+	int y_center = cell->h / 2;
 
 	short color;
 	if (data->flag.player == AI_MOVE)
@@ -41,8 +44,7 @@ void	message_box(t_data *data, Cell *cell, char *message)
 	else
 		color = TEXT_YELLOW;
 
-	if (!message)
-		message = ft_strdup("Your turn. Move with arrows left/right and drop pawn with 'SPACE'");
+
 
 	delete_message(textstart, y_center, message);
 

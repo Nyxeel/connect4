@@ -38,8 +38,8 @@ static bool	game_loop(t_data *game)
 
 	while (1)
 	{
-		refresh();
 
+		timeout(30);
 		if (game->flag.player == AI_MOVE)
 		{
 			ai_make_move(game);
@@ -48,6 +48,7 @@ static bool	game_loop(t_data *game)
 			sleep(2);
 			game->flag.player = PLAYER_MOVE;
 			game->flag.start = false;
+			refresh();
 		}
 		else
 		{
