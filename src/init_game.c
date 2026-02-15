@@ -4,8 +4,6 @@
 bool	init_game(t_data *data)
 {
 	srand(time(NULL));
-	init_signals();
-
 	data->map = ft_calloc(data->rows + 1, sizeof(char *));
 	if (!data->map)
 		return (false);
@@ -26,11 +24,6 @@ bool	init_game(t_data *data)
 			j++;
 		}
 		i++;
-	}
-
-	if (VERBOSE)
-	{
-		print_map(data);
 	}
 	return (true);
 }

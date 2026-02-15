@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 16:09:03 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 18:58:42 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 19:17:14 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int	parse_input(t_data *data, char *str)
 	int nb = ft_atoi(trim);
 	if (nb > data->columns || nb < 1)
 	{
-		print_error("Number out of grid scope\n");
+		if (nb < 0)
+			print_error("Negative numbers are not allowed");
+		else
+		 	print_error("Number out of grid scope\n");
 		return (0);
 	}
 	int lines = data->rows - 1;

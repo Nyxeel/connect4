@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 13:56:02 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 16:02:32 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 19:25:38 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@ static void	init_ncurses(t_data *game)
 	curs_set(0);
 	// Hide cursor on screen (usually it is blinking in the shell)
 	start_color();
+	init_color(10, 400, 400, 1000);
 	init_pair(YELLOW, COLOR_YELLOW, COLOR_YELLOW);
 	init_pair(RED, COLOR_RED, COLOR_RED);
 	init_pair(BLACK, COLOR_BLACK, COLOR_BLACK);
 	init_pair(TEXT_YELLOW, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(TEXT_RED, COLOR_RED, COLOR_BLACK);
 	init_pair(TEXT_BLUE, COLOR_BLUE, COLOR_BLACK);
-	init_pair(LANDING_INDICATOR, COLOR_GREEN, COLOR_BLACK);  // or other color
+	init_pair(LANDING_INDICATOR, 10, COLOR_BLACK);  // or other color
 	compute_cell_size(game, &game->cell);
 	return ;
 }
