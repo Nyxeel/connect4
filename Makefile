@@ -32,6 +32,7 @@ MODE ?= mandatory
 # Sources (MANDATORY base)
 # =========================
 SRCS_MAND = \
+	ai.c \
 	main.c \
 	parse.c \
 	init_game.c \
@@ -40,12 +41,14 @@ SRCS_MAND = \
 	utils.c \
 	cleanup.c \
 	verbose.c \
-	grid/render_grid.c \
-	grid/input_line.c \
-	grid/message.c \
 	check_game_state.c \
-	grid/render_ai_move.c \
-	ai.c
+	grid/game_loop.c \
+	grid/print_grid.c \
+	grid_bonus/render_grid.c \
+	grid_bonus/input_line.c \
+	grid_bonus/message.c \
+	grid_bonus/render_ai_move.c \
+	grid_bonus/bonus_game_loop.c \
 
 
 
