@@ -21,6 +21,7 @@
 #define PLAYER_MOVE 1
 #define COLOR_BLACK 2
 
+#define LANDING_INDICATOR 6
 #define CALC_POSITION 1
 
 #define START false

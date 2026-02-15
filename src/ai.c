@@ -50,15 +50,15 @@ static void	get_board_bounds(t_data *data, t_bounds *bounds)
 	bounds->min_r = 0;
 }
 
-static int	evaluate_window(int ai, int player, int empty)
+static int	evaluate_window(int ai, int player, int empty, int depth)
 {
 	int	score;
 
 	score = 0;
 	if (ai == 4)
-		return (1000000);
+		return (1000000 + depth);
 	if (player == 4)
-		return (-1000000);
+		return (-1000000 - depth);
 	if (ai == 3 && empty == 1)
 		score += 100;
 	if (ai == 2 && empty == 2)
@@ -70,7 +70,7 @@ static int	evaluate_window(int ai, int player, int empty)
 	return (score);
 }
 
-static int	score_position(t_data *data)
+static int	score_position(t_data *data, int depth)
 {
 	int			score;
 	char		**map;
@@ -111,7 +111,7 @@ static int	score_position(t_data *data)
 				else
 					em++;
 			}
-			score += evaluate_window(ai, pl, em);
+			score += evaluate_window(ai, pl, em, depth);
 		}
 	}
 	// Vertical (|)
@@ -130,7 +130,7 @@ static int	score_position(t_data *data)
 				else
 					em++;
 			}
-			score += evaluate_window(ai, pl, em);
+			score += evaluate_window(ai, pl, em, depth);
 		}
 	}
 	// Diagonal (\)
@@ -149,7 +149,7 @@ static int	score_position(t_data *data)
 				else
 					em++;
 			}
-			score += evaluate_window(ai, pl, em);
+			score += evaluate_window(ai, pl, em, depth);
 		}
 	}
 	// Diagonal (/)
@@ -168,7 +168,7 @@ static int	score_position(t_data *data)
 				else
 					em++;
 			}
-			score += evaluate_window(ai, pl, em);
+			score += evaluate_window(ai, pl, em, depth);
 		}
 	}
 	return (score);
@@ -238,7 +238,7 @@ static int	minimax(t_data *data, int depth, int alpha, int beta, int is_max,
 			return (-10000000 - depth);
 	}
 	if (depth == 0)
-		return (score_position(data));
+		return (score_position(data, depth));
 	// Quick bounds calc for this node
 	min_search = 0, max_search = data->columns;
 	get_board_bounds(data, &b);

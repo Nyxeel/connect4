@@ -2,8 +2,6 @@
 #include "../../inc/connect4.h"
 #include <ncurses.h>
 
-
-
 short	get_color(char c)
 {
 
@@ -32,6 +30,40 @@ int	color_game_map(t_data *data, Cell *cell, int x, int y)
 			chgat(cell->w, A_NORMAL, color, NULL);
 	}
 	return (0);
+}
+
+int find_landing_row(t_data *data, int column)
+{
+    int row = data->rows - 1;
+    while (row >= 0)
+    {
+        if (data->map[row][column] == '1' || data->map[row][column] == '2')
+            row--;
+        else
+            return row;
+    }
+    return -1; // Column is full
+}
+
+void highlight_landing_cell(t_data *data, Cell *cell)
+{
+    if (data->flag.player != PLAYER_MOVE)
+        return;
+        
+    int landing_row = find_landing_row(data, data->drop_position);
+    if (landing_row == -1)
+        return; // Column is full, don't highlight
+        
+    int start_x = 1 + data->drop_position * (cell->w + 1);
+    int start_y = 1 + (landing_row + 2) * (cell->h + 1);
+    
+    // Highlight the landing cell with a distinctive appearance
+    for (int row = 0; row < cell->h; row++)
+    {
+        move(start_y + row, start_x);
+        if (start_y + row < data->terminal_max_y)
+            chgat(cell->w, A_REVERSE | A_BOLD, LANDING_INDICATOR, NULL);
+    }
 }
 
 int	color_grid(t_data *data, Cell *cell)
@@ -154,6 +186,7 @@ int render_grid(t_data *data, Cell *cell)
 	color_input(data, &data->cell);
 
 	render_game(data, &data->cell);
+	highlight_landing_cell(data, &data->cell);
 
 	return (0);
 }

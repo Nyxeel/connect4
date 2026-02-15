@@ -29,6 +29,7 @@ static void	init_ncurses(t_data *game)
 	init_pair(TEXT_YELLOW, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(TEXT_RED, COLOR_RED, COLOR_BLACK);
 	init_pair(TEXT_BLUE, COLOR_BLUE, COLOR_BLACK);
+	init_pair(LANDING_INDICATOR, COLOR_GREEN, COLOR_BLACK);  // or other color
 	compute_cell_size(game, &game->cell);
 	return ;
 }
