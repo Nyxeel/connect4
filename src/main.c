@@ -1,8 +1,6 @@
 
 #include "../inc/connect4.h"
 
-volatile sig_atomic_t g_signal = 0;
-
 int	main(int ac, char **av)
 {
 	t_data data;

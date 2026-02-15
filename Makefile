@@ -37,10 +37,8 @@ SRCS_MAND = \
 	parse.c \
 	init_game.c \
 	start_game.c \
-	signals.c \
 	utils.c \
 	cleanup.c \
-	verbose.c \
 	check_game_state.c \
 	grid/game_loop.c \
 	grid/input_player.c \

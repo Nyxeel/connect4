@@ -18,6 +18,6 @@ bool	start_game(t_data *data)
 	else
 		exit = game_loop(data);
 	if (exit == false)
-		return (false);
+		return (false); //malloc error
 	return (true);
 }
