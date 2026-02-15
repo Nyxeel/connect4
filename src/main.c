@@ -7,9 +7,10 @@ int	main(int ac, char **av)
 {
 	t_data data;
 
+	ft_memset(&data.flag, 0, sizeof(data.flag));
 	if (ac == 4 && ft_strcmp(av[3], "bonus") == 0)
 		data.flag.bonus = true;
-	else if (ac != 3 || !av[1] || !av[2])
+	else if (ac != 3|| !av[1] || !av[2])
 		return (print_error("Please enter exact 2 argument - first for grid rows, second for grid columns"), 0);
 
 	if (!parse(&data, av) || !init_game(&data))
