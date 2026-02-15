@@ -1,6 +1,5 @@
 #include "../inc/connect4.h"
 #include <limits.h>
-#include <ncurses.h>
 
 // Actual game + 2 columns to left and right
 typedef struct s_bounds
@@ -214,39 +213,6 @@ static int	is_winning_move(t_data *data, int r, int c, char symbol)
 	return (0);
 }
 
-// Only consider columns that are adjacent to existing pieces.
-// static int is_candidate_column(t_data *data, int col)
-// {
-//     // If board is empty, center is candidate
-//     int center = data->columns / 2;
-//     //if (data->map[data->rows-1][center] == '.') {
-//         // Very basic check for empty board state if needed,
-//
-// but generally we check if any neighbor cols have pieces so idk if useful or needed
-//     //}
-
-//     // Look at col-2 to col+2. If any piece exists in bottom row,
-//      this is a played area
-//     int start;
-//     int end;
-
-//     if (col - 2 < 0)
-//         start = 0;
-//     else
-//         start = col - 2;
-
-//     if (col + 2 >= data->columns)
-//         end = data->columns - 1;
-//     else
-//         end = col + 2;
-//     for (int c = start; c <= end; c++) {
-//         if (data->map[data->rows - 1][c] != '.') return (1);
-//     }
-//     if (col == center) return (1);
-
-//     return (0);
-// }
-
 static int	minimax(t_data *data, int depth, int alpha, int beta, int is_max,
 		int last_r, int last_c)
 {
@@ -320,24 +286,6 @@ static int	minimax(t_data *data, int depth, int alpha, int beta, int is_max,
 	}
 }
 
-// static int	get_safe_depth(t_data *data)
-// {
-// 	int	filled;
-
-// 	// Total playable slots compared to branching factor
-// 	// 20x40 or 90x200 on depth > 6 is suicide
-// 	filled = 0;
-// 	// check center column fill for approximation
-// 	for (int r = 0; r < data->rows; r++)
-// 		if (data->map[r][data->columns / 2] != '.')
-// 			filled++;
-// 	if (data->columns > 50)
-// 		return (4); // Hard cap for wide boards
-// 	if (filled < 4)
-// 		return (6);
-// 	return (5);
-// }
-
 static int	get_dynamic_depth(t_data *data)
 {
 	float	fill_ratio;
@@ -397,7 +345,6 @@ void	ai_make_move(t_data *data)
 	int best_score = INT_MIN;
 	int best_col = -1;
 	int target_row = -1;
-	// int depth = get_safe_depth(data);
 	int depth = get_dynamic_depth(data);
 
 	// Calculate Search Window
@@ -457,7 +404,5 @@ void	ai_make_move(t_data *data)
 	free(order);
 
 	if (best_col != -1)
-	{
 		data->map[target_row][best_col] = '1';
-	}
 }
