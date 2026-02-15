@@ -28,7 +28,9 @@
 #define YELLOW 1
 #define RED 2
 #define TEXT_YELLOW 3
-#define TEXT_RED 3
+#define TEXT_RED 4
+#define TEXT_BLUE 5
+
 
 #define ESC 27
 

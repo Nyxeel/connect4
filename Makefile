@@ -44,6 +44,7 @@ SRCS_MAND = \
 	grid/input_line.c \
 	grid/message.c \
 	check_game_state.c \
+	grid/render_ai_move.c \
 	ai.c
 
 

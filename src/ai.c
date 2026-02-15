@@ -104,7 +104,7 @@ static int	get_available_row(t_data *data, int col)
 	map = data->map;
 	for (int r = data->rows - 1; r >= 0; r--)
 	{
-		if (map[r][col] == '.') // Assuming '.' is empty
+		if (data->map[r][col] == '0') // Assuming '0' is empty
 			return (r);
 	}
 	return (-1);
@@ -217,8 +217,8 @@ static int	minimax(t_data *data, int depth, int alpha, int beta,
 			if (r != -1)
 			{
 				data->map[r][c] = '1'; // AI Move
-				eval = minimax(data, depth - 1, alpha, beta, 1, r, c);
-				data->map[r][c] = '.';
+				eval = minimax(data, depth - 1, alpha, beta, 0, r, c);
+				data->map[r][c] = '0';
 				if (eval > max_eval)
 					max_eval = eval;
 				if (eval > alpha)
@@ -239,8 +239,8 @@ static int	minimax(t_data *data, int depth, int alpha, int beta,
 			if (r != -1)
 			{
 				data->map[r][c] = '2'; // Player Move
-				eval = minimax(data, depth - 1, alpha, beta, 0, r, c);
-				data->map[r][c] = '.';
+				eval = minimax(data, depth - 1, alpha, beta, 1, r, c);
+				data->map[r][c] = '0';
 				if (eval < min_eval)
 					min_eval = eval;
 				if (eval < beta)
@@ -307,7 +307,7 @@ static int	get_dynamic_depth(t_data *data)
 	return (depth);
 }
 
-void	ai_make_move(t_data *data)
+int	ai_make_move(t_data *data)
 {
 	char	**map;
 	int		best_score;
@@ -317,8 +317,7 @@ void	ai_make_move(t_data *data)
 	int		score;
 	int		dyn_depth;
 
-	map = data->map;
-	best_score = INT_MIN;
+	best_score = 0;
 	best_col = 0;
 	target_row = 0;
 	dyn_depth = get_dynamic_depth(data);
@@ -329,8 +328,10 @@ void	ai_make_move(t_data *data)
 		r = get_available_row(data, c);
 		if (r != -1)
 		{
-			score = minimax(data, dyn_depth, INT_MIN, INT_MAX, 1, r, c);
-			data->map[r][c] = '.';
+			data->map[r][c] = '1';
+			// TODO: Dynamic Depth based on Grid size
+			score = minimax(data, 4, INT_MIN, INT_MAX, 0, r, c);
+			data->map[r][c] = '0';
 			if (score > best_score)
 			{
 				best_score = score;
@@ -344,4 +345,5 @@ void	ai_make_move(t_data *data)
 
 
 	data->map[target_row][best_col] = '1';
+	return (best_col);
 }
