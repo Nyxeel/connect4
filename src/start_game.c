@@ -18,13 +18,9 @@ void	init_ncurses(t_data *game)
 	init_pair(TEXT_YELLOW, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(TEXT_RED, COLOR_RED, COLOR_BLACK);
 	init_pair(TEXT_BLUE, COLOR_BLUE, COLOR_BLACK);
-
-
 	compute_cell_size(game, &game->cell);
-
 	return ;
 }
-
 
 static bool	bonus_game_loop(t_data *game)
 {
@@ -32,11 +28,8 @@ static bool	bonus_game_loop(t_data *game)
 
 	init_ncurses(game);
 	ft_memset(&game->flag, 0, 0);
-
 	while (1)
 	{
-
-
 		if (game->flag.player == AI_MOVE)
 		{
 			ai_make_move(game);
@@ -58,19 +51,19 @@ static bool	bonus_game_loop(t_data *game)
 		state = check_game_state(game);
 		if (state == 0)
 			continue ;
-		else
+		else // comment for testing if you want to see how it won lol
 			clear();
 		game->flag.player = COLOR_BLUE;
 		if (state == 1)
-			message_box(game, &game->cell, "AI wins");
+			message_box(game, &game->cell, "	AI wins	");
 		else if (state == 2)
 			message_box(game, &game->cell, "Player wins");
 		else if (state == 3)
-			message_box(game, &game->cell, "Draw");
+			message_box(game, &game->cell, "	Draw	");
 		if (state != 0)
 			break ;
-
 	}
+	// sleep(3);
 	endwin();
 	return (true);
 }
@@ -84,8 +77,6 @@ bool	start_game(t_data *data)
 		data->flag.player = AI_MOVE;
 	else
 		data->flag.player = PLAYER_MOVE;
-
-
 	if (data->flag.bonus)
 		bonus_game_loop(data);
 	else

@@ -38,14 +38,14 @@ static void	get_board_bounds(t_data *data, t_bounds *bounds)
 		return ;
 	}
 	// Expand bounds slightly to check threats formed by empty spaces
-	if (bounds->min_c - 2 < 0)
+	if (bounds->min_c - 4 < 0)
 		bounds->min_c = 0;
 	else
-		bounds->min_c -= 2;
-	if (bounds->max_c + 2 >= data->columns)
+		bounds->min_c -= 4;
+	if (bounds->max_c + 4 >= data->columns)
 		bounds->max_c = data->columns - 1;
 	else
-		bounds->max_c += 2;
+		bounds->max_c += 4;
 	bounds->max_r = data->rows - 1;
 	bounds->min_r = 0;
 }
