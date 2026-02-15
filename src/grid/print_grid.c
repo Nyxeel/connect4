@@ -43,7 +43,6 @@ void	print_grid(t_data *data)
 {
 
 	/// RENDER GAME MAP
-	int y = 0;
 
 
 	ft_printf("\n\n");
@@ -61,7 +60,6 @@ void	print_grid(t_data *data)
                 ft_printf("─");
         }
         ft_printf("+\n");
-        y++;
 		column = -1;
         for (int h = 0; h < 1; h++)
         {
@@ -74,7 +72,6 @@ void	print_grid(t_data *data)
             }
 			line++;
             ft_printf("│");
-            y++;
         }
 		ft_printf("\n");
     }
