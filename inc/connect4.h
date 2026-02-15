@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   connect4.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/15 18:59:02 by pjelinek          #+#    #+#             */
+/*   Updated: 2026/02/15 18:59:05 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef CONNECT4_H
 # define CONNECT4_H
@@ -12,15 +23,9 @@
 # include <sys/ioctl.h>
 # include "time.h"
 # include "signal.h"
-
-
-
 # include "libft/src/libft.h"
 # include "defines.h"
 # include "structs.h"
 # include "game.h"
-
-extern volatile sig_atomic_t g_signal;
-
 
 #endif /* CONNECT4_H */

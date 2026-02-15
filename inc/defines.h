@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   defines.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/15 18:59:08 by pjelinek          #+#    #+#             */
+/*   Updated: 2026/02/15 18:59:14 by pjelinek         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef DEFINES_H
 #define DEFINES_H
@@ -32,8 +43,6 @@
 #define TEXT_YELLOW 3
 #define TEXT_RED 4
 #define TEXT_BLUE 5
-
-
 #define ESC 27
 
 #endif /* DEFINES_H */
