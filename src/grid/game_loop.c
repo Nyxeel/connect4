@@ -6,18 +6,21 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 14:10:27 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 14:44:58 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 15:45:39 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "connect4.h"
+#include "../../inc/connect4.h"
 
 
 bool	game_loop(t_data *game)
 {
 	//int	state;
-	ft_memset(&game->flag, 0, 0);
+	if (game->rows >= 20 || game->columns >= 40)
+		return (print_error("Your computer cannot handle such a big grid size!\nPlease contact Bocal for better hardware\n"), false);
 
+	game->map[8][6] = '1';
+	game->map[8][7] = '2';
 	int i = 0;
 	while (i < 2)
 	{
@@ -26,7 +29,7 @@ bool	game_loop(t_data *game)
 			print_grid(game, "\033[31mAI's turn\033[0m");
 
 			ft_sleep(2);
-			ai_make_move(game);
+			//ai_make_move(game);
 			game->flag.player = PLAYER_MOVE;
 			game->flag.start = false;
 		}
@@ -35,7 +38,6 @@ bool	game_loop(t_data *game)
 			print_grid(game, "\033[33mPlayer's turn\033[0m");
 			game->flag.player = AI_MOVE;
 			game->flag.start = false;
-
 		}
 		i++;
 
