@@ -20,7 +20,7 @@ static int	evaluate_window(int count_ai, int count_player, int count_empty)
 
 static int	checks(t_data *data, int score)
 {
-	char	**map;
+
 	char	v;
 	int		max_r;
 	int		max_c;
@@ -33,8 +33,9 @@ static int	checks(t_data *data, int score)
 	int		count_ai;
 	int		count_player;
 	int		count_empty;
+	char	**map = data->map;
 
-	map = data->map;
+
 	// Directions: horizontal, vertical, diag, anti-diag
 	int dirs[4][2] = {
 		{0, 1}, // to the right
@@ -99,9 +100,9 @@ static int	checks(t_data *data, int score)
 // find the first empty row in a column
 static int	get_available_row(t_data *data, int col)
 {
-	char	**map;
 
-	map = data->map;
+
+
 	for (int r = data->rows - 1; r >= 0; r--)
 	{
 		if (data->map[r][col] == '0') // Assuming '0' is empty
@@ -112,13 +113,14 @@ static int	get_available_row(t_data *data, int col)
 
 static int	score_position(t_data *data)
 {
-	char	**map;
-	int		score;
+	char **map = data->map;
 	int		center_col;
+	int		score;
+
 	int		r;
 
 	score = 0;
-	map = data->map;
+
 	// Focus on center column preference (strategic advantage)
 	center_col = data->columns / 2;
 	for (r = 0; r < data->rows; r++)
@@ -149,7 +151,7 @@ static void	get_column_order(int *order, int columns)
 
 static int	is_winning_move(t_data *data, int r, int c, char symbol)
 {
-	char	**map;
+
 	int		directions[4][2] = {{0, 1}, {1, 0}, {1, 1}, {1, -1}};
 	int		count;
 	int		dr;
@@ -157,7 +159,7 @@ static int	is_winning_move(t_data *data, int r, int c, char symbol)
 	int		nr;
 	int		nc;
 
-	map = data->map;
+
 	// Order: Horizontal, Vertical, Diagonal, Anti-Diagonal
 	for (int i = 0; i < 4; i++)
 	{
@@ -186,7 +188,7 @@ static int	is_winning_move(t_data *data, int r, int c, char symbol)
 static int	minimax(t_data *data, int depth, int alpha, int beta,
 		int is_maximizing, int last_r, int last_c)
 {
-	char	**map;
+
 	int		r;
 	int		eval;
 	int		col_order[data->columns];
@@ -194,7 +196,7 @@ static int	minimax(t_data *data, int depth, int alpha, int beta,
 	int		c;
 	int		min_eval;
 
-	map = data->map;
+
 	// Check if the previous move won the game
 	if (last_r != -1)
 	{
@@ -253,16 +255,16 @@ static int	minimax(t_data *data, int depth, int alpha, int beta,
 	}
 }
 
-static int	get_dynamic_depth(t_data *data)
+/* static int	get_dynamic_depth(t_data *data)
 {
-	char	**map;
+
 	float	fill_ratio;
 	int		total_cells;
 	int		playable_cols;
 	int		pieces_placed;
 	int		depth;
 
-	map = data->map;
+
 	total_cells = data->rows * data->columns;
 	playable_cols = 0;
 	pieces_placed = 0;
@@ -305,22 +307,22 @@ static int	get_dynamic_depth(t_data *data)
 	if (depth < 4)
 		depth = 4;
 	return (depth);
-}
+} */
 
 int	ai_make_move(t_data *data)
 {
-	char	**map;
+
 	int		best_score;
 	int		best_col;
 	int		target_row;
 	int		r;
 	int		score;
-	int		dyn_depth;
+
 
 	best_score = 0;
 	best_col = 0;
 	target_row = 0;
-	dyn_depth = get_dynamic_depth(data);
+	//int dyn_depth = get_dynamic_depth(data);
 	for (int c = 0; c < data->columns; c++)
 	{
 		// perror("ACCESS\n");
