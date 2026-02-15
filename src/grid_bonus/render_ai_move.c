@@ -27,7 +27,6 @@ void	render_move(t_data *data, int best_col)
 
 		moves--;
 	}
-	ft_sleep(1);
 	refresh();
 	return ;
 }

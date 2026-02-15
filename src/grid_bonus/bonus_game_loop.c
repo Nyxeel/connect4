@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 13:56:02 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 20:49:26 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 21:27:52 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,6 @@ static void	init_ncurses(t_data *game)
 	return ;
 }
 
-
-void	print_big_message(const char *msg)
-{
-	int	row, col;
-
-	getmaxyx(stdscr, row, col);
-	clear();
-
-	mvprintw(row/2 - 2, (col - 28) / 2, " █████╗ ██╗    ██╗██╗███╗   ██╗");
-	mvprintw(row/2 - 1, (col - 28) / 2, "██╔══██╗██║    ██║██║████╗  ██║");
-	mvprintw(row/2,     (col - 28) / 2, "███████║██║ █╗ ██║██║██╔██╗ ██║");
-	mvprintw(row/2 + 1, (col - 28) / 2, "██╔══██║██║███╗██║██║██║╚██╗██║");
-	mvprintw(row/2 + 2, (col - 28) / 2, "██║  ██║╚███╔███╔╝██║██║ ╚████║");
-
-	mvprintw(row/2 + 4, (col - ft_strlen(msg)) / 2, "%s", msg);
-	refresh();
-}
 
 bool	bonus_game_loop(t_data *game)
 {
@@ -86,7 +69,7 @@ bool	bonus_game_loop(t_data *game)
 			clear();
 		game->flag.player = COLOR_BLUE;
 		if (state == 1)
-			print_big_message("AI wins");
+			message_box(game, &game->cell, "AI wins");
 		else if (state == 2)
 			message_box(game, &game->cell, "Player wins");
 		else if (state == 3)
@@ -95,7 +78,7 @@ bool	bonus_game_loop(t_data *game)
 			break ;
 
 	}
-	ft_sleep(5);
+	ft_sleep(3);
 	endwin();
 	return (true);
 }

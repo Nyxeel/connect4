@@ -76,9 +76,6 @@ bool	check_player_input(t_data *data, int column)
 		else
 		{
 			data->map[lines][column] = '2';
-			color_input(data, &data->cell);
-			render_game(data, &data->cell);
-
 			return (true);
 		}
 	}

@@ -196,6 +196,8 @@ bool	render_loop(t_data *game)
 	while (1)
 	{
         clear();
+		flushinp();
+
 		getmaxyx(stdscr, game->terminal_max_y, game->terminal_max_x);
         if (game->terminal_max_x < 43 || game->terminal_max_y < 17)
 		{
@@ -232,10 +234,10 @@ bool	render_loop(t_data *game)
 			if (!check_player_input(game, game->drop_position))
 			{
 				message_box(game, &game->cell, "You cannot drop the pawn at this column\n");
-
 				continue ;
 			}
-			//flushinp();
+			color_input(game, &game->cell);
+			render_game(game, &game->cell);
 			break ;
 		}
 		if (ch == KEY_LEFT && game->flag.player == PLAYER_MOVE)
