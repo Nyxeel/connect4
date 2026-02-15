@@ -6,13 +6,12 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 03:46:17 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 04:26:09 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 05:20:08 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "connect4.h"
 #include "ncurses.h"
-
 
 void	render_move(t_data *data, int best_col)
 {

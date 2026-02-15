@@ -29,5 +29,7 @@ void	reset_message_box(t_data *data, Cell *cell);
 void	render_move(t_data *data, int target_row);
 
 void free_split(char **split);
+void	ft_sleep(int sek);
+
 
 #endif /* GAME_H */
