@@ -2,6 +2,8 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "structs.h"
+
 void print_map(t_data *data);
 void print_error(char *str);
 bool parse(t_data *data, char **argv);
@@ -22,6 +24,7 @@ int check_game_state(t_data *data);
 
 bool check_player_input(t_data *data, int column);
 int render_game(t_data *data, Cell *cell);
+void ai_make_move(t_data *data);
 
 void free_split(char **split);
 

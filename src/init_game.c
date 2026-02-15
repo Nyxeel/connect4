@@ -22,7 +22,7 @@ bool	init_game(t_data *data)
 		int j = 0;
 		while (j < data->columns)
 		{
-			data->map[i][j] = '0';
+			data->map[i][j] = '.';
 			j++;
 		}
 		i++;
