@@ -93,6 +93,6 @@ bool	start_game(t_data *data)
 	if (data->flag.bonus)
 		bonus_game_loop(data);
 	else
-		return false; //game_loop(data);
+		printf("To start game add 'bonus' as argv[3]\n");
 	return (true);
 }
