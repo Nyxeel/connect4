@@ -71,7 +71,6 @@ static bool	bonus_game_loop(t_data *game)
 			break ;
 
 	}
-	sleep(3);
 	endwin();
 	return (true);
 }

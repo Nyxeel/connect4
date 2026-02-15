@@ -1,3 +1,4 @@
+
 #ifndef CONNECT4_H
 # define CONNECT4_H
 
@@ -18,7 +19,6 @@
 # include "defines.h"
 # include "structs.h"
 # include "game.h"
-# include "ai.h"
 
 extern volatile sig_atomic_t g_signal;
 
