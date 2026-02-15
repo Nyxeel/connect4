@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 16:09:03 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 19:17:14 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 20:09:09 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,18 @@ int	parse_input(t_data *data, char *str)
 	if (!digit_check(trim))
 	{
 		print_error("Only numbers are valid!");
+		free(trim);
 		return (0);
 	}
 	if (int_overflow_check(trim))
 	{
 		print_error("Number would overflowed");
+		free(trim);
+
 		return (0);
 	}
 	int nb = ft_atoi(trim);
+	free(trim);
 	if (nb > data->columns || nb < 1)
 	{
 		if (nb < 0)

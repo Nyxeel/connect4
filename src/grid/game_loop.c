@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 14:10:27 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 19:12:01 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/15 20:06:54 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ bool	game_loop(t_data *game)
 			ft_printf("\033[31m .\033[0m");
 			ft_sleep(1);
 			ft_printf("\033[31m .\033[0m");
-			ft_sleep(1);
-			ft_printf("\033[31m .\033[0m");
 			int col = ai_make_move(game);
 			if (col == -1)
 				return (false); //malloc error
@@ -59,14 +57,10 @@ bool	game_loop(t_data *game)
 			game->flag.player = AI_MOVE;
 			game->flag.start = false;
 		}
-
-
-	state = check_game_state(game);
+		state = check_game_state(game);
 		if (state == 0)
 			continue ;
-
-
-		if (state == 1)
+		else if (state == 1)
 			ft_printf("\033[34mAI wins\033[0m\n");
 		else if (state == 2)
 			ft_printf("\033[34mPlayer wins\033[0m\n");

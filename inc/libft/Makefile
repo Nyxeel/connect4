@@ -6,7 +6,7 @@ NAME            := libft.a
 
 # Compiler & Flags (42)
 CC              := cc
-CFLAGS          := -Wall -Wextra -Werror -g
+CFLAGS          := -Wall -Wextra -Werror
 
 # Libft-Header
 HEADER          := libft.h
