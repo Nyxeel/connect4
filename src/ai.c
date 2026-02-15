@@ -38,9 +38,14 @@ static void	get_board_bounds(t_data *data, t_bounds *bounds)
 		return ;
 	}
 	// Expand bounds slightly to check threats formed by empty spaces
-	bounds->min_c = (bounds->min_c - 2 < 0) ? 0 : bounds->min_c - 2;
-	bounds->max_c = (bounds->max_c + 2 >= data->columns) ? data->columns
-		- 1 : bounds->max_c + 2;
+	if (bounds->min_c - 2 < 0)
+		bounds->min_c = 0;
+	else
+		bounds->min_c -= 2;
+	if (bounds->max_c + 2 >= data->columns)
+		bounds->max_c = data->columns - 1;
+	else
+		bounds->max_c += 2;
 	bounds->max_r = data->rows - 1;
 	bounds->min_r = 0;
 }
@@ -262,7 +267,10 @@ static int	minimax(t_data *data, int depth, int alpha, int beta, int is_max,
 			if (beta <= alpha)
 				break ;
 		}
-		return ((max_eval == INT_MIN) ? 0 : max_eval);
+		if (max_eval == INT_MIN)
+			return (0);
+		else
+			return (max_eval);
 	}
 	else
 	{
@@ -282,7 +290,10 @@ static int	minimax(t_data *data, int depth, int alpha, int beta, int is_max,
 			if (beta <= alpha)
 				break ;
 		}
-		return ((min_eval == INT_MAX) ? 0 : min_eval);
+		if (min_eval == INT_MAX)
+			return (0);
+		else
+			return (min_eval);
 	}
 }
 
