@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 14:10:27 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 21:21:00 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/19 16:58:21 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ bool	game_loop(t_data *game)
 		else
 		{
 			ft_printf( "\033[33mPlayer's turn\033[0m\n");
-			take_player_input(game);
+			if (take_player_input(game) == ERROR)
+				return (ft_printf("\nPlayer quit the game!\n"), true);
 			print_grid(game);
 			game->flag.player = AI_MOVE;
 			game->flag.start = false;

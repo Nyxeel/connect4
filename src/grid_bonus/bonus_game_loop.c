@@ -6,7 +6,7 @@
 /*   By: pjelinek <pjelinek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 13:56:02 by pjelinek          #+#    #+#             */
-/*   Updated: 2026/02/15 21:27:52 by pjelinek         ###   ########.fr       */
+/*   Updated: 2026/02/16 17:26:36 by pjelinek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ bool	bonus_game_loop(t_data *game)
 			break ;
 
 	}
-	ft_sleep(3);
+
+	color_input(game, &game->cell);
+	render_game(game, &game->cell);
+	ft_sleep(5);
 	endwin();
 	return (true);
 }
